@@ -30,3 +30,35 @@ insert into public.research_datasets(id,name,modalities,access_status,descriptio
 ('map-m2uav50','MAP-M2UAV50',array['RGB','IR','AIS','UAV'],'unknown','AMGT 报告约 12K 图像和 50 段视频。',null),
 ('mvrd','MVRD',array['mmWave radar','RGB'],'request','3,848 图像、3,848 雷达帧、28,332 目标标注。',null)
 on conflict(id) do update set name=excluded.name,modalities=excluded.modalities,access_status=excluded.access_status,description=excluded.description,download_url=excluded.download_url;
+
+-- Private personal PDF storage. Files are stored under <auth.uid()>/<paper_id>/<filename>.
+create table if not exists public.paper_pdf_files (
+ user_id uuid not null references auth.users(id) on delete cascade,
+ paper_id text not null references public.research_papers(id) on delete cascade,
+ storage_path text not null,
+ file_name text not null,
+ updated_at timestamptz not null default now(),
+ primary key(user_id,paper_id)
+);
+alter table public.paper_pdf_files enable row level security;
+drop policy if exists "Own PDF metadata only" on public.paper_pdf_files;
+create policy "Own PDF metadata only" on public.paper_pdf_files
+ for all to authenticated using(auth.uid()=user_id) with check(auth.uid()=user_id);
+grant select,insert,update,delete on public.paper_pdf_files to authenticated;
+
+insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)
+values('paper-pdfs','paper-pdfs',false,104857600,array['application/pdf'])
+on conflict(id) do update set public=false,file_size_limit=104857600,allowed_mime_types=array['application/pdf'];
+drop policy if exists "Own paper PDF read" on storage.objects;
+create policy "Own paper PDF read" on storage.objects for select to authenticated
+ using(bucket_id='paper-pdfs' and (storage.foldername(name))[1]=auth.uid()::text);
+drop policy if exists "Own paper PDF upload" on storage.objects;
+create policy "Own paper PDF upload" on storage.objects for insert to authenticated
+ with check(bucket_id='paper-pdfs' and (storage.foldername(name))[1]=auth.uid()::text);
+drop policy if exists "Own paper PDF update" on storage.objects;
+create policy "Own paper PDF update" on storage.objects for update to authenticated
+ using(bucket_id='paper-pdfs' and (storage.foldername(name))[1]=auth.uid()::text)
+ with check(bucket_id='paper-pdfs' and (storage.foldername(name))[1]=auth.uid()::text);
+drop policy if exists "Own paper PDF delete" on storage.objects;
+create policy "Own paper PDF delete" on storage.objects for delete to authenticated
+ using(bucket_id='paper-pdfs' and (storage.foldername(name))[1]=auth.uid()::text);
