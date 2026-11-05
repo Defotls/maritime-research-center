@@ -31,7 +31,7 @@ footer{text-align:center;padding:30px;color:var(--muted);font-size:13px}
 <main id="library">
 <section class="panel">
 <h2 style="margin-top:0">论文检索与分类</h2>
-<p style="line-height:1.8;color:#475569">当前收录 7 篇论文：既有原分类库的 3 篇，也新增 4 篇已上传 PDF 对应研究；每篇新增论文均有独立详情页。论文状态、指标口径和数据开放情况分别标注；期刊分区没有可靠核验的，不做推断。</p>
+<p style="line-height:1.8;color:#475569">当前收录 7 篇论文：原有 3 篇全部保留，另将你上传的 4 篇 PDF 对应论文正式加入分类库；7 篇均有独立详情页和 PDF 阅读入口。论文状态、指标口径和数据开放情况分别标注；期刊分区没有可靠核验的，不做推断。</p>
 <div class="stats">
 <div class="stat"><strong id="count">7</strong><span>论文条目</span></div>
 <div class="stat"><strong>6</strong><span>研究方向标签</span></div>
@@ -46,7 +46,8 @@ footer{text-align:center;padding:30px;color:var(--muted);font-size:13px}
 <button data-filter="tracking">多目标跟踪</button>
 <button data-filter="ais">AIS 关联</button>
 <button data-filter="infrared">红外视觉</button>
-<button data-filter="radar">雷达感知</button>\n<button data-filter="lidar">LiDAR</button><button data-filter="crossdomain">跨领域配准</button>
+<button data-filter="radar">雷达感知</button>
+<button data-filter="lidar">LiDAR</button><button data-filter="crossdomain">跨领域配准</button>
 <button data-filter="preprint">预印本</button>
 </div>
 </section>
@@ -54,7 +55,7 @@ footer{text-align:center;padding:30px;color:var(--muted);font-size:13px}
 <article class="paper" id="p-amgt" data-cats="fusion detection tracking ais infrared preprint" data-search="AMGT Multi-Modal Graph Neural Network-Inspired Vessel Identification and Tracking for UAV-Based Maritime Surveillance Chenjie Zhao Jiangtian Nie Jiawen Kang Yuxu Lu Ryan Wen Liu MAP-M2UAV50 MAir-YOLOv8-OBB MAir-SORT graph neural network AIS RGB visible infrared IR UAV">
 <span class="tag">RGB + IR + AIS + UAV</span><span class="tag">检测 / 跟踪 / 关联</span><span class="status">arXiv 预印本</span>
 <h2>① Multi-Modal Graph Neural Network-Inspired Vessel Identification and Tracking for UAV-Based Maritime Surveillance</h2>
-<div class="meta">作者：Chenjie Zhao, Jiangtian Nie, Jiawen Kang, Yuxu Lu, Ryan Wen Liu<br>首次提交：2026-10-09 · arXiv:2610.13220v1 · 当前记录状态：预印本，非正式期刊论文</div>
+<div class="meta">作者：Chenjie Zhao, Jiangtian Nie, Jiawen Kang, Yuxu Lu, Ryan Wen Liu<br>首次提交：2026-10-09 · <a href="pdf.html?id=p-amgt">arXiv:2610.13220v1 / PDF</a> · 当前记录状态：预印本，非正式期刊论文</div>
 <h3>研究问题与方法</h3>
 <p>面向无人机海上监控，将可见光/红外图像、AIS 与 UAV 飞行数据结合，处理恶劣成像、平台运动导致的坐标变化，以及视频目标与 AIS 身份之间的异步关联。整体框架 AMGT 包含多模态预处理、MAir-YOLOv8-OBB 检测、MAir-SORT 跟踪、时空图学习关联和运动感知坐标统一（MCU）。</p>
 <div class="flow"><div class="step">RGB / IR 视频<br>＋ AIS / GNSS / IMU</div><div class="arrow">→</div><div class="step">帧率同步<br>透视变换对齐</div><div class="arrow">→</div><div class="step">MAir-YOLOv8-OBB<br>旋转框检测</div><div class="arrow">→</div><div class="step">MAir-SORT<br>多线索跟踪</div><div class="arrow">→</div><div class="step">MCU + 时空图网络<br>匈牙利匹配</div><div class="arrow">→</div><div class="step">连续轨迹<br>＋ AIS / MMSI 身份</div></div>
@@ -62,26 +63,26 @@ footer{text-align:center;padding:30px;color:var(--muted);font-size:13px}
 <p>MAP-M2UAV50 包含约 12K 张图像、50 段视频、约 70K 条标注，涉及可见光、红外、AIS 和飞行数据。检测实验中 MAir-YOLOv8s-OBB 的 mAP50 为 97.81%、mAP50-95 为 82.00%；在 8 段代表性航拍视频上的 MAir-SORT 报告 MOTA 83.78%、IDF1 91.76%、HOTA 72.77%，IDS 为 2。</p>
 <div class="metrics"><div class="metric"><strong>97.81%</strong><span>mAP50（检测）</span></div><div class="metric"><strong>82.00%</strong><span>mAP50-95（检测）</span></div><div class="metric"><strong>83.78%</strong><span>MOTA（8 段视频）</span></div><div class="metric"><strong>91.76%</strong><span>IDF1（8 段视频）</span></div></div>
 <div class="note">复现提醒：这是 UAV 视角的四模态系统，不等同于岸基/船载固定摄像机方案；论文写明数据集与代码将公开，本次尚未确认公开仓库已可下载。不能将该预印本作为正式二区期刊论文引用。</div>
-<div class="links"><a href="https://arxiv.org/html/2610.13220" target="_blank" rel="noopener">arXiv 原文 HTML →</a><a href="https://arxiv.org/abs/2610.13220" target="_blank" rel="noopener">arXiv 摘要页 →</a><a href="../reports/2026-11-05.html#p1">本期周报分析 →</a></div>
+<div class="links"><a href="pdf.html?id=p-amgt">直接打开 PDF 阅读 →</a><a href="detail.html?id=p-amgt">论文详情 →</a><a href="https://arxiv.org/html/2610.13220" target="_blank" rel="noopener">arXiv 原文 HTML →</a><a href="https://arxiv.org/abs/2610.13220" target="_blank" rel="noopener">arXiv 摘要页 →</a><a href="../reports/2026-11-05.html#p1">本期周报分析 →</a></div>
 </article>
 
 <article class="paper" id="p-feature-ais" data-cats="fusion detection tracking ais radar" data-search="Vessel Detection and Tracking Based on Feature-Level Fusion and AIS Enhancement Yue Lin Zuo Meng Yuan Kangyi Feng Hui Huang Wenbin Song Pei VFFRadar-Net Deformable Cross-Attention Scale-Adaptive Loss AF-SORT radar visible AIS">
 <span class="tag">航海雷达 + 可见光 + AIS</span><span class="tag">检测 / 跟踪 / 轨迹关联</span><span class="status">期刊在线发表</span>
 <h2>② Vessel Detection and Tracking Based on Feature-Level Fusion and AIS Enhancement</h2>
-<div class="meta">作者：Yue Lin, Zuo Meng, Yuan Kangyi, Feng Hui, Huang Wenbin, Song Pei<br>期刊：中国舰船研究（Chinese Journal of Ship Research）· 官方网站在线发表：2026-04-27<br>DOI：10.19693/j.issn.1673-3185.04841</div>
+<div class="meta">作者：Yue Lin, Zuo Meng, Yuan Kangyi, Feng Hui, Huang Wenbin, Song Pei<br>期刊：中国舰船研究（Chinese Journal of Ship Research）· 官方网站在线发表：2026-04-27<br>DOI：<a href="pdf.html?id=p-feature-ais">10.19693/j.issn.1673-3185.04841</a></div>
 <h3>研究问题与方法</h3>
 <p>针对复杂水面环境下单一传感器检测不稳定、雷达小目标易漏检和跟踪漂移，融合航海雷达、可见光相机与 AIS。VFFRadar-Net 使用可见光特征增强雷达目标检测；Deformable Cross-Attention 用于跨模态特征交互与对齐；Scale-Adaptive Loss 缓解小目标定位偏差；AIS 增强 SORT 跟踪，并以多特征轨迹相似度关联 AIS 与雷达轨迹。</p>
 <div class="flow"><div class="step">航海雷达<br>＋可见光图像<br>＋ AIS 消息</div><div class="arrow">→</div><div class="step">雷达/图像特征提取<br>跨模态对齐</div><div class="arrow">→</div><div class="step">VFFRadar-Net<br>特征级融合检测</div><div class="arrow">→</div><div class="step">AIS 增强 SORT<br>在线多目标跟踪</div><div class="arrow">→</div><div class="step">多特征轨迹相似度<br>AIS-雷达关联</div></div>
 <h3>摘要报告结果</h3>
 <div class="metrics"><div class="metric"><strong>91.9%</strong><span>平均检测精度</span></div><div class="metric"><strong>85.2%</strong><span>MOTA</span></div><div class="metric"><strong>76.2%</strong><span>IDF1</span></div><div class="metric"><strong>3 模态</strong><span>雷达 / 视觉 / AIS</span></div></div>
 <div class="note">核验提醒：已核对期刊官网的题名、作者、在线日期与摘要指标；本次未核实该刊当前适用的中科院分区，也未确认代码或数据是否公开。出版社英文摘要中跟踪模块缩写出现 AF-SORT / AE-SORT 不一致，正式引用前建议以论文 PDF 正文统一核对。</div>
-<div class="links"><a href="https://doi.org/10.19693/j.issn.1673-3185.04841" target="_blank" rel="noopener">DOI 原文入口 →</a><a href="https://www.ship-research.com/en/article/doi/10.19693/j.issn.1673-3185.04841" target="_blank" rel="noopener">期刊官网页面 →</a><a href="../reports/2026-11-05.html#p2">本期周报分析 →</a></div>
+<div class="links"><a href="pdf.html?id=p-feature-ais">DOI / PDF 阅读器 →</a><a href="detail.html?id=p-feature-ais">论文详情 →</a><a href="https://doi.org/10.19693/j.issn.1673-3185.04841" target="_blank" rel="noopener">DOI 原文入口 →</a><a href="https://www.ship-research.com/en/article/doi/10.19693/j.issn.1673-3185.04841" target="_blank" rel="noopener">期刊官网页面 →</a><a href="../reports/2026-11-05.html#p2">本期周报分析 →</a></div>
 </article>
 
 <article class="paper" id="p-vision-radar" data-cats="fusion detection radar" data-search="Dynamic Object Detection in Maritime Navigation Scenarios Based on Vision Radar Fusion Qianqian Chen Changshi Xiao Bowei Li Sensors MVRD Faster R-CNN millimeter wave radar camera">
 <span class="tag">毫米波雷达 + 视觉</span><span class="tag">动态目标检测</span><span class="status">正式期刊论文 · Open Access</span>
 <h2>③ Dynamic Object Detection in Maritime Navigation Scenarios Based on Vision–Radar Fusion</h2>
-<div class="meta">作者：Qianqian Chen, Changshi Xiao, Bowei Li<br>期刊：Sensors · 2026-06-02 · 26(11), 3508<br>DOI：10.3390/s26113508</div>
+<div class="meta">作者：Qianqian Chen, Changshi Xiao, Bowei Li<br>期刊：Sensors · 2026-06-02 · 26(11), 3508<br>DOI：<a href="pdf.html?id=p-vision-radar">10.3390/s26113508</a></div>
 <h3>研究问题与方法</h3>
 <p>面向海上航行中的遮挡、尺度变化、多目标干扰和恶劣能见度，建立雷达-摄像机协同标定与跨模态特征映射；雷达点迹被投影并扩展为距离/速度特征图，与视觉特征融合；随后使用改进 Faster R-CNN、优化 RPN 和多尺度训练进行动态目标检测。</p>
 <div class="flow"><div class="step">毫米波雷达<br>＋摄像机图像</div><div class="arrow">→</div><div class="step">协同标定<br>单应性映射</div><div class="arrow">→</div><div class="step">雷达距离/速度<br>特征图扩展</div><div class="arrow">→</div><div class="step">视觉-雷达特征融合<br>增广拉格朗日优化</div><div class="arrow">→</div><div class="step">改进 Faster R-CNN<br>多尺度检测</div></div>
@@ -89,7 +90,40 @@ footer{text-align:center;padding:30px;color:var(--muted);font-size:13px}
 <p>作者构建自有 MVRD 数据集，包含 3,848 张图像、3,848 帧雷达数据和 28,332 个目标标注。表 3 报告的 Precision：晴天 88.93%、强眩光 76.86%、雾天 74.47%、密集目标场景 83.01%。该论文研究的是海上动态目标感知，不应直接把所有结果解释为标准公开船舶检测基准成绩。</p>
 <div class="metrics"><div class="metric"><strong>88.93%</strong><span>晴天 Precision</span></div><div class="metric"><strong>76.86%</strong><span>强眩光 Precision</span></div><div class="metric"><strong>74.47%</strong><span>雾天 Precision</span></div><div class="metric"><strong>83.01%</strong><span>密集目标 Precision</span></div></div>
 <div class="note">复现提醒：MVRD 为作者自建数据集；论文数据可向通讯作者合理请求，本次未确认可直接公开下载。论文使用毫米波雷达，但不应在没有设备规格证据时擅自标注为 77 GHz。</div>
-<div class="links"><a href="https://doi.org/10.3390/s26113508" target="_blank" rel="noopener">DOI 原文入口 →</a><a href="https://www.mdpi.com/1424-8220/26/11/3508" target="_blank" rel="noopener">Sensors 出版社页面 →</a><a href="../reports/2026-11-05.html#p3">本期周报分析 →</a></div>
+<div class="links"><a href="pdf.html?id=p-vision-radar">DOI / 直接 PDF 阅读 →</a><a href="detail.html?id=p-vision-radar">论文详情 →</a><a href="https://doi.org/10.3390/s26113508" target="_blank" rel="noopener">DOI 原文入口 →</a><a href="https://www.mdpi.com/1424-8220/26/11/3508" target="_blank" rel="noopener">Sensors 出版社页面 →</a><a href="../reports/2026-11-05.html#p3">本期周报分析 →</a></div>
+</article>
+
+
+<article class="paper" id="p-deepsorvf" data-cats="fusion tracking ais" data-search="DeepSORVF Asynchronous Trajectory Matching-Based Multimodal Maritime Data Fusion Vessel Traffic Surveillance Inland Waterways Yu Guo Ryan Wen Liu Jingxiang Qu Yuxu Lu Fenghua Zhu Yisheng Lv AIS video FVessel">
+<span class="tag">AIS + 视频</span><span class="tag">异步轨迹关联</span><span class="tag">遮挡鲁棒跟踪</span><span class="status">IEEE T-ITS · 2023</span>
+<h2>④ Asynchronous Trajectory Matching-Based Multimodal Maritime Data Fusion for Vessel Traffic Surveillance in Inland Waterways</h2>
+<div class="meta">作者：Yu Guo, Ryan Wen Liu, Jingxiang Qu, Yuxu Lu, Fenghua Zhu, Yisheng Lv<br>IEEE Transactions on Intelligent Transportation Systems, 24(11), 12779–12792 · DOI：<a href="pdf.html?id=deepsorvf">10.1109/TITS.2023.3285415</a></div>
+<p>DeepSORVF 分别构建 AIS 与视频船舶轨迹，通过异步轨迹匹配建立身份关联，并结合 AIS/视频运动特征提升遮挡场景下的跟踪连续性。配套公开数据集 FVessel。</p>
+<div class="links"><a href="pdf.html?id=deepsorvf">DOI / 直接 PDF 阅读 →</a><a href="detail.html?id=deepsorvf">论文详情与复现 →</a><a href="https://github.com/gy65896/DeepSORVF" target="_blank" rel="noopener">作者代码 →</a><a href="https://github.com/gy65896/FVessel" target="_blank" rel="noopener">FVessel 数据集 →</a></div>
+</article>
+
+<article class="paper" id="p-naveye" data-cats="fusion tracking ais radar" data-search="NavEYE Vision-Centered Multi-Sensor Fusion Situational Awareness Intelligent Surface Vehicles Ryan Wen Liu Junxiong Liang Haoyu Wang Mengwei Bao Ocean Engineering MAPFusion MCGA DAWF TDSF VARF AIS radar RGB GNSS gyrocompass">
+<span class="tag">AIS + 雷达 + RGB</span><span class="tag">船载态势感知</span><span class="status">Ocean Engineering · 2026</span>
+<h2>⑤ NavEYE: Vision-Centered Multi-Sensor Fusion-Based Situational Awareness System for Intelligent Surface Vehicles</h2>
+<div class="meta">作者：Ryan Wen Liu, Junxiong Liang, Haoyu Wang, Mengwei Bao<br>Ocean Engineering, 363(4), Article 126781 · 2026-08-15 · DOI：<a href="pdf.html?id=naveye">10.1016/j.oceaneng.2026.126781</a></div>
+<p>提出 MCGA、DAWF、TDSF 和 VARF，分别处理 AIS-雷达关联、距离自适应融合、单源缺测时的轨迹拼接，以及视觉-AIS-雷达联合关联；构建真实船载 MAPFusion 数据集。</p>
+<div class="links"><a href="pdf.html?id=naveye">DOI / 直接 PDF 阅读 →</a><a href="detail.html?id=naveye">论文详情与复现 →</a><a href="https://doi.org/10.1016/j.oceaneng.2026.126781" target="_blank" rel="noopener">期刊版本页面 →</a><a href="../datasets/index.html#mapfusion">MAPFusion 数据集 →</a></div>
+</article>
+
+<article class="paper" id="p-lidarais" data-cats="fusion detection tracking ais lidar" data-search="Fusion of LiDAR and AIS data for improved maritime object detection Juraj Obradovic Dorian Moznik Nikola Miskovic Control Engineering Practice YOLO11 BEV OBB clustering marina">
+<span class="tag">LiDAR + AIS</span><span class="tag">BEV / OBB 检测</span><span class="status">Control Engineering Practice · 2026</span>
+<h2>⑥ Fusion of LiDAR and AIS Data for Improved Maritime Object Detection</h2>
+<div class="meta">作者：Juraj Obradović, Dorian Možnik, Nikola Mišković<br>Control Engineering Practice, 175, Article 107100 · 2026 · DOI：<a href="pdf.html?id=lidarais">10.1016/j.conengprac.2026.107100</a></div>
+<p>将 3D LiDAR 点云投影为 BEV，使用 YOLO11 OBB 检测，并以确定性聚类补充孤立漂浮物和岸边锚泊船舶检测；再通过 Kalman 滤波和路径匹配融合 AIS。论文报告混合检测召回率由 63.8% 提升至 82.4%。</p>
+<div class="links"><a href="pdf.html?id=lidarais">DOI / PDF 阅读 →</a><a href="detail.html?id=lidarais">论文详情与复现 →</a><a href="https://doi.org/10.1016/j.conengprac.2026.107100" target="_blank" rel="noopener">期刊版本页面 →</a><a href="https://doi.org/10.5281/zenodo.20345163" target="_blank" rel="noopener">600 帧测试子集 →</a></div>
+</article>
+
+<article class="paper" id="p-attentionoffsetnet" data-cats="fusion crossdomain" data-search="Attention OffsetNet Translation-Free Transfer Learning Optical SAR Registration Full-Scene Subpixel Refinement Jin-Woo Yu Hyung-Sup Jung KOMPSAT TerraSAR-X CBAM RANSAC">
+<span class="tag">卫星光学 + SAR</span><span class="tag">跨模态图像配准</span><span class="status">IEEE JSTARS · 2026 · 跨领域方法</span>
+<h2>⑦ Attention OffsetNet: Translation-Free Transfer Learning for Optical-SAR Registration With Full-Scene Subpixel Refinement</h2>
+<div class="meta">作者：Jin-Woo Yu, Hyung-Sup Jung<br>IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 19, 31663–31679 · 2026 · DOI：<a href="pdf.html?id=attentionoffsetnet">10.1109/JSTARS.2026.3731425</a></div>
+<p>先进行光学-光学预训练，再迁移到光学-SAR 配准；通过 CBAM 注意力与偏移回归学习跨模态几何对应，最后使用 RANSAC 完成全景精化。该论文的 SAR 是卫星合成孔径雷达，不是船载航海雷达或 77 GHz 毫米波雷达。</p>
+<div class="links"><a href="pdf.html?id=attentionoffsetnet">DOI / PDF 阅读器 →</a><a href="detail.html?id=attentionoffsetnet">论文详情与复现 →</a><a href="https://doi.org/10.1109/JSTARS.2026.3731425" target="_blank" rel="noopener">期刊版本页面 →</a></div>
 </article>
 
 <section class="panel">
