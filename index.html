@@ -1,214 +1,90 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="船舶多模态科研中心：AIS、雷达、可见光、长波红外融合，船舶检测、跟踪与轨迹关联研究。">
 <title>船舶多模态科研中心</title>
 <style>
-:root {
-  --bg:#f4f7fb;--card:#fff;--text:#172033;
-  --muted:#68758a;--blue:#2563eb;--line:#e5eaf2;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
-font-family:"Microsoft YaHei",Arial,sans-serif}
-header{background:#10213c;color:white;padding:35px 7%}
-header h1{font-size:30px;margin:0 0 12px}
-header p{color:#c5d2e5;line-height:1.8;margin:0}
-nav{background:white;padding:15px 7%;display:flex;
-gap:22px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
-nav a{color:#334155;text-decoration:none;font-size:14px}
-nav a:hover{color:var(--blue)}
-main{max-width:1150px;margin:30px auto;padding:0 20px}
-.hero{background:linear-gradient(120deg,#1d4ed8,#0f766e);
-color:white;border-radius:18px;padding:30px;margin-bottom:25px}
-.hero h2{margin-top:0;font-size:25px}
-.hero p{line-height:1.8;color:#e0edff}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);
-gap:15px;margin:20px 0}
-.stat,.panel,.category{background:var(--card);
-border:1px solid var(--line);border-radius:14px;padding:20px}
-.stat strong{font-size:24px;color:var(--blue);display:block}
-.stat span{font-size:13px;color:var(--muted)}
-h2.section{font-size:21px;margin:35px 0 16px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.category{cursor:pointer;transition:.2s}
-.category:hover{border-color:var(--blue);transform:translateY(-2px)}
-.category h3{font-size:16px;margin:0 0 10px}
-.category p{font-size:13px;color:var(--muted);line-height:1.8;margin:0}
-.tag{display:inline-block;background:#eaf1ff;color:#2457b5;
-padding:5px 10px;border-radius:20px;font-size:12px;margin-bottom:12px}
-.search{width:100%;padding:13px;border:1px solid var(--line);
-border-radius:9px;font-size:14px;margin:10px 0}
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-.filters button{border:1px solid var(--line);background:white;
-padding:9px 14px;border-radius:20px;cursor:pointer}
-.filters button.active{background:var(--blue);color:white}
-.report{padding:18px;border:1px solid var(--line);
-border-radius:12px;margin:12px 0;background:white}
-.report h3{margin:0 0 8px;font-size:17px}
-.report p{color:var(--muted);font-size:13px;line-height:1.8}
-.empty{padding:30px;text-align:center;color:var(--muted);
-background:white;border:1px dashed #cbd5e1;border-radius:12px}
-footer{text-align:center;padding:30px;color:var(--muted);font-size:13px}
-@media(max-width:700px){
-.grid{grid-template-columns:1fr}
-.stats{grid-template-columns:1fr}
-header h1{font-size:24px}
-}
+:root{--bg:#f3f6fb;--card:#fff;--text:#172033;--muted:#64748b;--blue:#2563eb;--line:#e2e8f0;--navy:#10213c}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:"Microsoft YaHei",Arial,sans-serif}
+header{background:linear-gradient(120deg,#10213c,#163d63);color:#fff;padding:38px max(5%,calc((100% - 1150px)/2))}
+header h1{font-size:30px;margin:0 0 10px}header p{color:#cbd5e1;line-height:1.8;margin:3px 0}
+nav{background:#fff;padding:15px max(5%,calc((100% - 1150px)/2));display:flex;gap:22px;flex-wrap:wrap;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+nav a{color:#334155;text-decoration:none;font-size:14px}nav a:hover{color:var(--blue)}
+main{max-width:1150px;margin:28px auto;padding:0 20px}.hero{background:linear-gradient(120deg,#1d4ed8,#0f766e);color:white;border-radius:18px;padding:30px;margin-bottom:22px}
+.hero h2{margin-top:0;font-size:25px}.hero p{line-height:1.9;color:#e0edff}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.actions a{display:inline-block;padding:11px 16px;border-radius:9px;background:#fff;color:#1d4ed8;font-weight:700;text-decoration:none;font-size:14px}.actions a.secondary{background:#ffffff20;color:#fff;border:1px solid #ffffff80}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 28px}.stat,.panel,.category,.report{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}.stat strong{font-size:23px;color:var(--blue);display:block}.stat span{font-size:13px;color:var(--muted)}
+h2.section{font-size:21px;margin:34px 0 15px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.category{display:block;color:inherit;text-decoration:none;transition:.2s}.category:hover{border-color:var(--blue);transform:translateY(-2px)}.category h3{font-size:16px;margin:4px 0 8px}.category p{font-size:13px;color:var(--muted);line-height:1.8;margin:0}
+.tag{display:inline-block;background:#eaf1ff;color:#2457b5;padding:5px 10px;border-radius:20px;font-size:12px;margin:2px}
+.report{margin:12px 0}.report h3{margin:8px 0;font-size:17px}.report p{color:var(--muted);font-size:13px;line-height:1.8}.report a{font-weight:700;color:var(--blue);text-decoration:none}
+.links{display:flex;gap:10px;flex-wrap:wrap}.links a{display:inline-block;background:#fff;border:1px solid var(--line);padding:12px 15px;border-radius:10px;color:#1d4ed8;text-decoration:none;font-weight:700;font-size:14px}
+ul{line-height:1.9;color:#475569}footer{text-align:center;padding:30px;color:var(--muted);font-size:13px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}header h1{font-size:24px}.hero{padding:22px}}
 </style>
 </head>
 <body>
-
 <header>
 <h1>🚢 船舶多模态科研中心</h1>
 <p>MARITIME MULTIMODAL RESEARCH CENTER</p>
-<p>船舶智能感知 · 多源数据融合 · 目标检测 · 多目标跟踪 · AIS轨迹关联</p>
+<p>船舶智能感知 · 多源数据融合 · 目标检测 · 多目标跟踪 · AIS 轨迹关联</p>
 </header>
-
 <nav>
-<a href="#home">科研首页</a>
-<a href="#weekly">论文周报</a>
-<a href="#categories">研究方向</a>
-<a href="#archive">历史论文</a>
-<a href="#plan">科研计划</a>
+<a href="#home">科研首页</a><a href="#weekly">论文周报</a><a href="#categories">研究方向</a><a href="papers/index.html">论文分类库</a><a href="reports/index.html">历史周报</a><a href="#plan">科研计划</a>
 </nav>
-
 <main id="home">
 <section class="hero">
-<h2>欢迎来到我的船舶多模态科研中心</h2>
-<p>这里集中管理每周论文周报、研究方向、论文技术路线和科研进度。
-每周五更新高质量船舶多模态感知论文，优先关注中科院二区及以上期刊。</p>
+<h2>让船舶多模态研究有序积累</h2>
+<p>集中管理 AIS、航海雷达、可见光视频、长波红外和毫米波雷达相关文献，围绕船舶目标检测、多目标跟踪、跨模态关联与复杂环境感知建立持续更新的科研资料库。</p>
 <strong>研究主线：RGB + LWIR + Radar + AIS</strong>
+<div class="actions"><a href="papers/index.html">进入论文分类库 →</a><a class="secondary" href="reports/index.html">浏览历史周报 →</a></div>
 </section>
-
 <div class="stats">
-<div class="stat"><strong>每周五</strong><span>论文周报更新日</span></div>
-<div class="stat"><strong>4 类</strong><span>重点传感器数据</span></div>
-<div class="stat"><strong>长期</strong><span>论文归档与科研积累</span></div>
+<div class="stat"><strong>3 篇</strong><span>当前分类库论文条目</span></div>
+<div class="stat"><strong>1 期</strong><span>已提交周报归档</span></div>
+<div class="stat"><strong>6 类</strong><span>核心研究方向</span></div>
+<div class="stat"><strong>每周五</strong><span>计划更新日</span></div>
 </div>
 
-<h2 class="section" id="weekly">📚 每周论文周报</h2>
-<div class="panel">
-<span class="tag">最新一期</span>
-<h3>船舶多模态感知论文周报</h3>
-<p>每期独立归档。每篇论文独立介绍研究问题、模型、实验、创新点和局限性，并附技术流程图。</p>
-
-<div class="report" style="padding:20px;border:1px solid #e2e8f0;border-radius:12px;margin-top:15px;background:white">
-  <span class="tag">最新一期 · 2026年11月5日</span>
-  <h3>🚢 船舶多模态感知论文周报</h3>
-  <p>本期包含视觉＋红外＋AIS、雷达＋视觉融合、船舶目标检测等研究方向。</p>
-  <p>每篇论文独立分析，包含研究问题、模型方法、实验结果、创新点和技术路线图。</p>
-  <a href="reports/2026-11-05.html" target="_blank" style="color:#2563eb;font-weight:bold">
-    阅读本期论文周报 →
-  </a>
-</div>
-
-</div>
+<h2 class="section" id="weekly">📚 最新论文周报</h2>
+<section class="report">
+<span class="tag">最新一期 · 2026-11-05</span><span class="tag">GitHub 已提交</span>
+<h3>🚢 船舶多模态感知论文周报｜第 02 期</h3>
+<p>本期围绕 RGB/红外/AIS 无人机船舶识别、雷达/可见光/AIS 特征融合，以及视觉-雷达海上动态目标检测。每篇论文独立说明数据、方法、实验指标和复现注意事项。</p>
+<p><a href="reports/2026-11-05.html">阅读本期周报 →</a></p>
+</section>
+<section class="report">
+<span class="tag">历史周报入口</span>
+<h3>🗂️ 每期独立归档</h3>
+<p>按日期浏览每一期周报，不覆盖旧内容；可搜索日期和主题。</p>
+<a href="reports/index.html">进入历史周报归档 →</a>
+</section>
 
 <h2 class="section" id="categories">🔬 研究方向分类</h2>
 <div class="grid">
-<div class="category" data-cat="fusion">
-<span class="tag">多模态融合</span>
-<h3>AIS + 雷达 + 视觉 + 红外</h3>
-<p>数据同步、空间配准、特征融合、决策级融合和传感器可靠性。</p>
-</div>
-<div class="category" data-cat="detection">
-<span class="tag">目标检测</span>
-<h3>船舶目标检测</h3>
-<p>YOLO、Transformer、小目标检测、夜间检测和雾天检测。</p>
-</div>
-<div class="category" data-cat="tracking">
-<span class="tag">多目标跟踪</span>
-<h3>船舶多目标跟踪</h3>
-<p>DeepSORT、ByteTrack、轨迹预测、身份保持和遮挡恢复。</p>
-</div>
-<div class="category" data-cat="association">
-<span class="tag">跨模态关联</span>
-<h3>AIS与视觉轨迹关联</h3>
-<p>时间同步、坐标转换、轨迹相似度、匈牙利算法和图神经网络。</p>
-</div>
-<div class="category" data-cat="infrared">
-<span class="tag">红外视觉</span>
-<h3>RGB + LWIR 融合</h3>
-<p>红外特征提取、跨模态对齐、夜间船舶识别和图像融合。</p>
-</div>
-<div class="category" data-cat="radar">
-<span class="tag">雷达感知</span>
-<h3>雷达 + AIS 融合</h3>
-<p>雷达目标检测、航迹关联、卡尔曼滤波和毫米波雷达感知。</p>
-</div>
+<a class="category" href="papers/index.html#p-amgt"><span class="tag">多模态融合</span><h3>AIS + 雷达 + 视觉 + 红外</h3><p>数据同步、空间配准、特征融合、决策级融合与传感器可靠性。</p></a>
+<a class="category" href="papers/index.html#p-vision-radar"><span class="tag">目标检测</span><h3>船舶与海上目标检测</h3><p>YOLO、Faster R-CNN、Transformer、小目标、夜间与雾天检测。</p></a>
+<a class="category" href="papers/index.html#p-amgt"><span class="tag">多目标跟踪</span><h3>船舶多目标跟踪</h3><p>SORT 系列、轨迹预测、身份保持、遮挡恢复与跨帧关联。</p></a>
+<a class="category" href="papers/index.html#p-amgt"><span class="tag">跨模态关联</span><h3>AIS 与视觉轨迹关联</h3><p>时间同步、坐标转换、轨迹相似度、匈牙利算法和图网络。</p></a>
+<a class="category" href="papers/index.html#p-amgt"><span class="tag">红外视觉</span><h3>RGB + LWIR 融合</h3><p>红外特征提取、跨模态对齐、夜间船舶识别和图像融合。</p></a>
+<a class="category" href="papers/index.html#p-feature-ais"><span class="tag">雷达感知</span><h3>雷达 + AIS 融合</h3><p>雷达目标检测、航迹关联、卡尔曼滤波和毫米波雷达感知。</p></a>
 </div>
 
-<h2 class="section" id="archive">🗂️ 论文归档</h2>
-<input class="search" id="search" placeholder="搜索论文标题或研究方向……">
-<div class="filters" id="filters">
-<button class="active" data-filter="all">全部</button>
-<button data-filter="fusion">多模态融合</button>
-<button data-filter="detection">目标检测</button>
-<button data-filter="tracking">多目标跟踪</button>
-<button data-filter="association">跨模态关联</button>
-<button data-filter="infrared">红外视觉</button>
-<button data-filter="radar">雷达融合</button>
-</div>
-<div id="reports">
-<div class="empty">目前尚未发布归档论文。后续正式核验的论文将按分类逐篇加入。</div>
-</div>
+<h2 class="section">📖 科研资料入口</h2>
+<div class="panel links"><a href="papers/index.html">论文分类库与关键词检索 →</a><a href="reports/index.html">历史周报归档 →</a><a href="https://github.com/Defotls/maritime-research-center" target="_blank" rel="noopener">GitHub 源码仓库 →</a></div>
 
 <h2 class="section" id="plan">🎯 科研计划</h2>
-<div class="panel">
+<section class="panel">
 <h3>核心研究目标</h3>
-<p>基于公开数据集和算法创新，研究夜间、雾天及复杂海面环境下的船舶目标检测与多模态感知。</p>
+<p>基于公开数据集与算法创新，研究夜间、雾天及复杂海面环境下的船舶目标检测与多模态感知。</p>
 <ul>
-<li>第一阶段：公开数据集整理与基线模型复现。</li>
-<li>第二阶段：RGB-LWIR 双模态融合算法。</li>
-<li>第三阶段：雷达辅助检测与多目标跟踪。</li>
-<li>第四阶段：AIS 轨迹关联与遮挡鲁棒性提升。</li>
-<li>第五阶段：论文实验、消融研究与投稿。</li>
+<li>第一阶段：公开数据集整理与单模态基线复现。</li>
+<li>第二阶段：RGB-LWIR 双模态特征对齐与融合。</li>
+<li>第三阶段：雷达辅助检测、特征级融合与多目标跟踪。</li>
+<li>第四阶段：AIS 轨迹关联、遮挡鲁棒性与身份恢复。</li>
+<li>第五阶段：消融实验、跨数据集泛化评估与论文投稿。</li>
 </ul>
-</div>
+</section>
 </main>
-
-<footer>
-船舶多模态科研中心 · Maritime Research Center<br>
-个人科研资料与论文学习归档
-</footer>
-
-<script>
-const buttons=document.querySelectorAll('#filters button');
-const search=document.getElementById('search');
-const cards=document.querySelectorAll('.category');
-let current='all';
-
-function update(){
- const q=search.value.toLowerCase();
- cards.forEach(card=>{
-  const category=card.dataset.cat;
-  const visible=(current==='all'||category===current)&&
-   card.innerText.toLowerCase().includes(q);
-  card.style.display=visible?'block':'none';
- });
-}
-buttons.forEach(btn=>{
- btn.addEventListener('click',()=>{
-  current=btn.dataset.filter;
-  buttons.forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  update();
- });
-});
-search.addEventListener('input',update);
-cards.forEach(card=>{
- card.addEventListener('click',()=>{
-  current=card.dataset.cat;
-  buttons.forEach(b=>{
-   b.classList.toggle('active',b.dataset.filter===current);
-  });
-  update();
-  document.getElementById('archive').scrollIntoView({behavior:'smooth'});
- });
-});
-</script>
-</body>
-</html>
+<footer>船舶多模态科研中心 · Maritime Research Center<br>个人科研资料与论文学习归档</footer>
+</body></html>
