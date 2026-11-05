@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026-11-05 船舶多模态论文周报</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f6fb;color:#1e293b;font-family:"Microsoft YaHei",Arial,sans-serif}
+header{background:#10213c;color:white;padding:30px max(5%,calc((100% - 1100px)/2))}
+header h1{margin:0 0 12px;font-size:26px}
+header p{color:#cbd5e1;line-height:1.8}
+main{max-width:1100px;margin:28px auto;padding:0 18px}
+a{color:#2563eb;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:white;padding:15px max(5%,calc((100% - 1100px)/2));display:flex;gap:18px;flex-wrap:wrap}
+nav a{font-size:14px}
+.intro,.paper{background:white;border:1px solid #e2e8f0;border-radius:14px;padding:22px;margin-bottom:20px}
+h2{font-size:21px;margin-top:0}
+h3{font-size:18px}
+.meta{color:#64748b;font-size:13px;line-height:1.9}
+.tag{display:inline-block;background:#eaf1ff;color:#2457b5;border-radius:20px;padding:5px 10px;font-size:12px;margin:3px}
+.warning{background:#fff7e6;border-left:4px solid #e5a000;padding:12px;margin:14px 0;font-size:13px;line-height:1.8}
+.flow{display:flex;align-items:stretch;gap:7px;flex-wrap:wrap;margin:18px 0}
+.step{flex:1 1 125px;min-width:115px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:9px;padding:12px;text-align:center;font-size:13px;line-height:1.7}
+.arrow{align-self:center;color:#64748b;font-weight:bold}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+td,th{border:1px solid #e2e8f0;padding:10px;text-align:left;line-height:1.6}
+th{background:#f1f5f9}
+ul{line-height:1.9}
+footer{text-align:center;color:#64748b;padding:30px;font-size:13px}
+@media(max-width:600px){header h1{font-size:21px}.intro,.paper{padding:16px}.arrow{display:none}}
+</style>
+</head>
+<body>
+<header>
+<h1>🚢 船舶多模态感知论文周报</h1>
+<p>第 02 期 · 2026年11月5日<br>
+研究重点：AIS、雷达、可见光、红外、多目标跟踪与跨模态轨迹关联</p>
+</header>
+
+<nav>
+<a href="../index.html">返回科研中心首页</a>
+<a href="#directory">本期目录</a>
+<a href="#p1">视觉＋红外＋AIS</a>
+<a href="#p2">雷达＋视觉＋AIS</a>
+<a href="#p3">雷达＋视觉检测</a>
+<a href="#conclusion">研究总结</a>
+</nav>
+
+<main>
+<section class="intro" id="directory">
+<h2>📚 本期论文入口 / 目录</h2>
+<p>本期重点关注多模态船舶识别、雷达与视觉融合、AIS辅助跟踪。</p>
+<ul>
+<li><a href="#p1">论文一：多模态图神经网络船舶识别与跟踪</a></li>
+<li><a href="#p2">论文二：雷达、可见光特征融合与AIS增强跟踪</a></li>
+<li><a href="#p3">论文三：海上视觉－雷达动态目标检测</a></li>
+</ul>
+<div class="warning">
+筛选说明：本期包含预印本和正式发表论文。预印本不等于正式期刊论文；期刊分区未核实的论文不标记为中科院二区及以上。引用前请进一步核对论文原文、作者版本及发表状态。
+</div>
+</section>
+
+<section class="paper" id="p1">
+<span class="tag">视觉＋红外＋AIS</span>
+<span class="tag">多目标跟踪</span>
+<span class="tag">图神经网络</span>
+<h2>论文一：Multi-Modal Graph Neural Network-Inspired Vessel Identification and Tracking for UAV-Based Maritime Surveillance</h2>
+<p class="meta">作者：Chenjie Zhao 等（以论文原文为准）<br>
+发布时间：2026年10月 · arXiv预印本<br>
+<a href="https://arxiv.org/abs/2610.13220" target="_blank">阅读论文原文 →</a></p>
+
+<h3>1. 研究问题</h3>
+<p>无人机海上监控中，可见光与红外成像差异、无人机自身运动、AIS与视频时间不同步，会导致船舶检测不稳定，以及视频目标与AIS身份难以准确关联。研究目标是实现船舶检测、连续跟踪和MMSI身份关联。</p>
+
+<h3>2. 数据与模型</h3>
+<ul>
+<li>输入：RGB视频、红外视频、AIS、无人机GNSS/IMU数据。</li>
+<li>检测：MAir-YOLOv8-OBB，面向旋转船舶目标检测。</li>
+<li>跟踪：MAir-SORT，维持船舶身份连续性。</li>
+<li>关联：时空图神经网络与匈牙利算法。</li>
+<li>坐标处理：利用无人机运动信息进行坐标统一。</li>
+</ul>
+
+<h3>3. 技术路线图</h3>
+<div class="flow">
+<div class="step">RGB＋LWIR<br>图像输入</div><div class="arrow">→</div>
+<div class="step">图像对齐<br>模态融合</div><div class="arrow">→</div>
+<div class="step">MAir-YOLOv8-OBB<br>船舶检测</div><div class="arrow">→</div>
+<div class="step">MAir-SORT<br>多目标跟踪</div><div class="arrow">→</div>
+<div class="step">时空图关联<br>＋AIS匹配</div><div class="arrow">→</div>
+<div class="step">船舶轨迹<br>＋MMSI身份</div>
+</div>
+
+<h3>4. 实验设计与关键结果</h3>
+<p>论文介绍了MAP-M2UAV50数据集，包含约12,000张图像、50段视频和约70,000条标注，覆盖不同天气、光照和海上监控场景。</p>
+<table>
+<tr><th>指标</th><th>论文报告结果</th></tr>
+<tr><td>MOTA</td><td>83.78%</td></tr>
+<tr><td>IDF1</td><td>91.76%</td></tr>
+<tr><td>HOTA</td><td>72.77%</td></tr>
+<tr><td>ID Switches</td><td>2</td></tr>
+</table>
+
+<h3>5. 创新点</h3>
+<ul>
+<li>把视觉检测、目标跟踪和AIS身份关联放入统一流程。</li>
+<li>利用时空图结构建模视频轨迹与AIS轨迹之间的关系。</li>
+<li>考虑无人机运动引起的坐标变化。</li>
+</ul>
+
+<h3>6. 局限性与推荐理由</h3>
+<p>无人机视角与固定岸基监控视角存在差异；图神经网络关联效果还需要在其他港口和公开数据集上验证。论文目前属于预印本，不能作为已发表二区论文引用。</p>
+<p><strong>推荐理由：</strong>适合重点学习图神经网络如何关联视频轨迹和AIS身份，尤其适合研究跨模态轨迹匹配。</p>
+</section>
+
+<section class="paper" id="p2">
+<span class="tag">雷达＋可见光</span>
+<span class="tag">AIS增强跟踪</span>
+<span class="tag">特征级融合</span>
+<h2>论文二：Vessel Detection and Tracking Based on Feature-Level Fusion and AIS Enhancement</h2>
+<p class="meta">作者：Yue Lin、Zuo Meng、Yuan Kangyi 等（以原文为准）<br>
+来源：Chinese Journal of Ship Research，2026年<br>
+DOI：10.19693/j.issn.1673-3185.04841<br>
+<a href="https://doi.org/10.19693/j.issn.1673-3185.04841" target="_blank">阅读论文原文 →</a></p>
+
+<h3>1. 研究问题</h3>
+<p>雷达能够提供目标距离和运动信息，但检测结果可能缺少外观信息；可见光能够提供丰富的外观特征，但受光照、雾气和遮挡影响。AIS则提供船舶身份和运动信息。研究目标是通过特征融合和AIS增强，提高船舶检测与跟踪能力。</p>
+
+<h3>2. 模型与方法</h3>
+<table>
+<tr><th>模块</th><th>方法</th><th>作用</th></tr>
+<tr><td>雷达检测</td><td>VFFRadar-Net</td><td>利用可见光信息增强雷达检测</td></tr>
+<tr><td>特征融合</td><td>Deformable Cross-Attention</td><td>跨模态特征交互和对齐</td></tr>
+<tr><td>损失优化</td><td>Scale-Adaptive Loss</td><td>改善不同尺度目标定位</td></tr>
+<tr><td>多目标跟踪</td><td>AF-SORT</td><td>融合AIS信息辅助跟踪</td></tr>
+</table>
+
+<h3>3. 技术路线图</h3>
+<div class="flow">
+<div class="step">雷达数据<br>＋RGB视频</div><div class="arrow">→</div>
+<div class="step">特征提取<br>跨模态对齐</div><div class="arrow">→</div>
+<div class="step">VFFRadar-Net<br>特征融合检测</div><div class="arrow">→</div>
+<div class="step">AF-SORT<br>在线跟踪</div><div class="arrow">→</div>
+<div class="step">AIS轨迹关联<br>身份增强</div><div class="arrow">→</div>
+<div class="step">船舶目标<br>＋身份轨迹</div>
+</div>
+
+<h3>4. 关键结果</h3>
+<table>
+<tr><th>指标</th><th>报告结果</th></tr>
+<tr><td>平均检测精度</td><td>91.9%</td></tr>
+<tr><td>MOTA</td><td>85.2%</td></tr>
+<tr><td>IDF1</td><td>76.2%</td></tr>
+</table>
+
+<h3>5. 创新点、局限性与推荐理由</h3>
+<p>创新点在于将雷达与可见光特征融合，并利用AIS增强在线跟踪。需要进一步核对原文中的数据集、实验划分、指标定义和对比基线；本期尚未核实该刊的中科院分区及代码公开情况。</p>
+<p><strong>推荐理由：</strong>研究方向与你的雷达＋视觉＋AIS技术路线高度接近，值得优先核对和精读。</p>
+</section>
+
+<section class="paper" id="p3">
+<span class="tag">雷达＋视觉</span>
+<span class="tag">目标检测</span>
+<span class="tag">正式期刊论文</span>
+<h2>论文三：Dynamic Object Detection in Maritime Navigation Scenarios Based on Vision–Radar Fusion</h2>
+<p class="meta">期刊：Sensors，2026年6月2日，26(11)，3508<br>
+<a href="https://doi.org/10.3390/s26113508" target="_blank">阅读论文全文 →</a></p>
+
+<h3>1. 研究问题</h3>
+<p>海上雾天、强眩光和复杂背景会降低视觉检测性能。研究通过视觉与雷达互补，提高动态海上目标的检测能力。</p>
+
+<h3>2. 方法与技术路线</h3>
+<table>
+<tr><th>步骤</th><th>使用方法</th><th>作用</th></tr>
+<tr><td>传感器标定</td><td>雷达与摄像机协同标定</td><td>建立空间对应关系</td></tr>
+<tr><td>特征映射</td><td>跨模态特征映射</td><td>建立雷达与图像特征联系</td></tr>
+<tr><td>优化</td><td>增广拉格朗日优化</td><td>优化融合过程</td></tr>
+<tr><td>目标检测</td><td>改进Faster R-CNN</td><td>检测海上动态目标</td></tr>
+</table>
+
+<h3>3. 技术路线图</h3>
+<div class="flow">
+<div class="step">雷达数据<br>＋视觉图像</div><div class="arrow">→</div>
+<div class="step">协同标定<br>空间映射</div><div class="arrow">→</div>
+<div class="step">跨模态特征<br>融合优化</div><div class="arrow">→</div>
+<div class="step">改进Faster<br>R-CNN</div><div class="arrow">→</div>
+<div class="step">动态海上<br>目标检测</div>
+</div>
+
+<h3>4. 实验结果</h3>
+<table>
+<tr><th>场景</th><th>报告检测精度</th></tr>
+<tr><td>雾天</td><td>74.47%</td></tr>
+<tr><td>强眩光</td><td>76.86%</td></tr>
+</table>
+<p>论文使用自建MVRD数据集。上述结果应结合原文指标定义和测试集条件理解。</p>
+
+<h3>5. 创新点、局限性与推荐理由</h3>
+<p>该研究将雷达空间信息与视觉特征结合，重点解决复杂海上环境中的目标检测问题。其数据集和实验条件与其他船舶公开数据集可能不同，不能直接横向比较精度。</p>
+<p><strong>推荐理由：</strong>适合学习雷达与摄像机标定、特征映射和复杂环境检测的实验设计。</p>
+</section>
+
+<section class="intro" id="conclusion">
+<h2>🎯 本期研究总结</h2>
+<h3>最值得深入的三个方向</h3>
+<ol>
+<li><strong>AIS＋视觉轨迹关联：</strong>研究时间同步、坐标转换、图神经网络和匈牙利匹配。</li>
+<li><strong>雷达＋RGB特征融合：</strong>研究跨模态对齐、特征增强和小目标检测。</li>
+<li><strong>遮挡鲁棒多目标跟踪：</strong>结合历史外观特征、运动预测和AIS身份信息恢复轨迹。</li>
+</ol>
+<h3>建议复现顺序</h3>
+<p>先复现单模态船舶检测，再实现RGB与雷达特征融合，然后接入多目标跟踪，最后加入AIS轨迹关联。每个阶段都要设置独立基线和消融实验。</p>
+<div class="warning">
+本期论文为候选阅读清单。正式投稿或写入学位论文前，请以出版商页面和论文全文核实作者、发表状态、数据集、指标及期刊分区。预印本不得标注为正式期刊论文。
+</div>
+</section>
+</main>
+
+<footer>
+船舶多模态科研中心 · 2026-11-05<br>
+论文学习与技术路线归档
+</footer>
+</body>
+</html>
