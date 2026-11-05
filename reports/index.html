@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="船舶多模态科研中心每周论文周报历史归档。">
+<title>历史周报归档｜船舶多模态科研中心</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--text:#172033;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--navy:#10213c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:"Microsoft YaHei",Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:30px max(5%,calc((100% - 1100px)/2))}
+header h1{margin:0 0 8px;font-size:26px}header p{margin:0;color:#cbd5e1;line-height:1.8}
+nav{background:#fff;border-bottom:1px solid var(--line);padding:14px max(5%,calc((100% - 1100px)/2));display:flex;gap:18px;flex-wrap:wrap}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}nav a{color:#334155;font-size:14px}
+main{max-width:1100px;margin:28px auto;padding:0 18px}.panel,.report{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}.stat strong{display:block;color:var(--blue);font-size:23px}.stat span{font-size:13px;color:var(--muted)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.tools input{flex:1;min-width:220px;padding:12px;border:1px solid var(--line);border-radius:9px;font-size:14px}.tools select{padding:12px;border:1px solid var(--line);border-radius:9px;background:#fff}
+.report{margin:12px 0}.report h2{font-size:19px;margin:8px 0}.meta{font-size:13px;color:var(--muted);line-height:1.8}.tag{display:inline-block;padding:4px 9px;border-radius:20px;background:#eaf1ff;color:#2457b5;font-size:12px;margin:2px}.report p{line-height:1.8;color:#475569}.report a.primary{display:inline-block;margin-top:6px;font-weight:700}
+.empty{display:none;padding:25px;text-align:center;color:var(--muted);border:1px dashed #cbd5e1;border-radius:12px;background:#fff}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:30px}
+@media(max-width:650px){.summary{grid-template-columns:1fr}header h1{font-size:22px}}
+</style>
+</head>
+<body>
+<header><h1>🗂️ 历史论文周报</h1><p>船舶多模态科研中心 · 按发布日期归档，保留每期独立页面。</p></header>
+<nav>
+<a href="../index.html">科研中心首页</a>
+<a href="../papers/index.html">论文分类库</a>
+<a href="#archive">周报归档</a>
+</nav>
+<main id="archive">
+<section class="panel">
+<h2 style="margin-top:0">周报归档说明</h2>
+<p style="line-height:1.8;color:#475569">这里仅列出已经提交到 GitHub 仓库的周报页面。每期周报保留独立链接；论文条目、原文链接和研究方向请进入论文分类库查看。未提交到仓库的本地草稿不会被显示为已发布归档。</p>
+<div class="summary">
+<div class="stat"><strong id="issueCount">1</strong><span>已归档期数</span></div>
+<div class="stat"><strong>2026</strong><span>当前归档年份</span></div>
+<div class="stat"><strong>每周五</strong><span>计划更新频率</span></div>
+</div>
+</section>
+<div class="tools">
+<input id="search" type="search" placeholder="搜索日期、标题或主题……" aria-label="搜索周报">
+<select id="year" aria-label="按年份筛选"><option value="all">全部年份</option><option value="2026">2026</option></select>
+</div>
+<section id="reports">
+<article class="report" data-year="2026" data-search="2026-11-05 船舶多模态感知论文周报 RGB 红外 AIS 雷达 目标检测 多目标跟踪">
+<span class="tag">2026 年</span><span class="tag">已提交 GitHub</span>
+<h2>🚢 船舶多模态感知论文周报｜2026-11-05</h2>
+<div class="meta">发布日期：2026 年 11 月 5 日 · 文件：reports/2026-11-05.html</div>
+<p>本期收录 3 篇候选研究：RGB/红外/AIS 无人机船舶识别与跟踪、雷达/可见光/AIS 特征级融合，以及视觉-雷达海上动态目标检测。页面标注预印本与正式期刊论文状态，并提示尚未核实的期刊分区。</p>
+<span class="tag">多模态融合</span><span class="tag">目标检测</span><span class="tag">多目标跟踪</span><span class="tag">AIS 关联</span><span class="tag">雷达视觉</span>
+<br><a class="primary" href="2026-11-05.html">打开本期完整周报 →</a>
+</article>
+</section>
+<div id="empty" class="empty">没有找到符合条件的周报。</div>
+</main>
+<footer>船舶多模态科研中心 · 历史周报归档</footer>
+<script>
+const input=document.getElementById('search'),year=document.getElementById('year'),cards=[...document.querySelectorAll('.report')],empty=document.getElementById('empty');
+function filter(){const q=input.value.trim().toLowerCase(),y=year.value;let n=0;cards.forEach(c=>{const ok=(y==='all'||c.dataset.year===y)&&c.dataset.search.toLowerCase().includes(q);c.style.display=ok?'block':'none';if(ok)n++});empty.style.display=n?'none':'block'}
+input.addEventListener('input',filter);year.addEventListener('change',filter);
+</script>
+</body></html>
