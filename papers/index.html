@@ -46,7 +46,8 @@ footer{text-align:center;padding:30px;color:var(--muted);font-size:13px}
 <button data-filter="tracking">多目标跟踪</button>
 <button data-filter="ais">AIS 关联</button>
 <button data-filter="infrared">红外视觉</button>
-<button data-filter="radar">雷达感知</button>\n<button data-filter="lidar">LiDAR</button><button data-filter="crossdomain">跨领域配准</button>
+<button data-filter="radar">雷达感知</button>
+<button data-filter="lidar">LiDAR</button><button data-filter="crossdomain">跨领域配准</button>
 <button data-filter="preprint">预印本</button>
 </div>
 </section>
@@ -92,11 +93,40 @@ footer{text-align:center;padding:30px;color:var(--muted);font-size:13px}
 <div class="links"><a href="https://doi.org/10.3390/s26113508" target="_blank" rel="noopener">DOI 原文入口 →</a><a href="https://www.mdpi.com/1424-8220/26/11/3508" target="_blank" rel="noopener">Sensors 出版社页面 →</a><a href="../reports/2026-11-05.html#p3">本期周报分析 →</a></div>
 </article>
 
+
+<article class="paper" id="p-deepsorvf" data-cats="fusion tracking ais" data-search="DeepSORVF Asynchronous Trajectory Matching Multimodal Maritime Data Fusion Vessel Traffic Surveillance Inland Waterways Yu Guo Ryan Wen Liu Jingxiang Qu Yuxu Lu Fenghua Zhu Yisheng Lv AIS video FVessel anti occlusion">
+<span class="tag">AIS + 视频</span><span class="tag">异步轨迹匹配</span><span class="tag">遮挡鲁棒跟踪</span><span class="status">IEEE T-ITS · 2023</span>
+<h2>④ Asynchronous Trajectory Matching-Based Multimodal Maritime Data Fusion for Vessel Traffic Surveillance in Inland Waterways</h2>
+<div class="meta">作者：Yu Guo, Ryan Wen Liu, Jingxiang Qu, Yuxu Lu, Fenghua Zhu, Yisheng Lv<br>IEEE Transactions on Intelligent Transportation Systems, 24(11), 12779–12792 · DOI：10.1109/TITS.2023.3285415</div>
+<p>DeepSORVF 通过 AIS 与视频轨迹的异步匹配实现船舶身份融合，并利用运动先验增强遮挡情况下的跟踪。配套 FVessel 数据集包含内河视频和 AIS。</p>
+<div class="links"><a href="detail.html?id=deepsorvf">论文详情页与复现路线 →</a><a href="https://github.com/gy65896/DeepSORVF" target="_blank" rel="noopener">开源代码 →</a><a href="https://github.com/gy65896/FVessel" target="_blank" rel="noopener">FVessel 数据集 →</a></div></article>
+
+<article class="paper" id="p-naveye" data-cats="fusion detection tracking ais radar" data-search="NavEYE Vision Centered Multi Sensor Fusion Situational Awareness Intelligent Surface Vehicles Ryan Wen Liu Junxiong Liang Haoyu Wang Mengwei Bao Ocean Engineering MAPFusion MCGA DAWF TDSF VARF AIS radar RGB GNSS">
+<span class="tag">AIS + 雷达 + RGB</span><span class="tag">船载态势感知</span><span class="status">Ocean Engineering · 2026</span>
+<h2>⑤ NavEYE: Vision-Centered Multi-Sensor Fusion-Based Situational Awareness System for Intelligent Surface Vehicles</h2>
+<div class="meta">作者：Ryan Wen Liu, Junxiong Liang, Haoyu Wang, Mengwei Bao<br>Ocean Engineering, 363, Part 4, Article 126781 · 2026-08-15 · DOI：10.1016/j.oceaneng.2026.126781</div>
+<p>提出 MCGA、DAWF、TDSF 和 VARF，分别处理 AIS-雷达关联、距离自适应融合、数据缺失时轨迹平滑拼接，以及视觉-AIS-雷达联合关联；构建真实船载 MAPFusion 数据集。</p>
+<div class="links"><a href="detail.html?id=naveye">论文详情页与复现路线 →</a><a href="https://doi.org/10.1016/j.oceaneng.2026.126781" target="_blank" rel="noopener">期刊原文 →</a><a href="../datasets/index.html#mapfusion">MAPFusion 数据集记录 →</a></div></article>
+
+<article class="paper" id="p-lidarais" data-cats="fusion detection tracking ais lidar" data-search="Fusion of LiDAR and AIS data for improved maritime object detection Juraj Obradovic Dorian Moznik Nikola Miskovic Control Engineering Practice YOLO11 BEV OBB clustering Zenodo marina">
+<span class="tag">LiDAR + AIS</span><span class="tag">YOLO11 BEV / OBB</span><span class="status">Control Engineering Practice · 2026</span>
+<h2>⑥ Fusion of LiDAR and AIS Data for Improved Maritime Object Detection</h2>
+<div class="meta">作者：Juraj Obradović, Dorian Možnik, Nikola Mišković<br>Control Engineering Practice, 175, Article 107100 · DOI：10.1016/j.conengprac.2026.107100</div>
+<p>以 BEV 投影和 YOLO11 OBB 检测为基础，叠加确定性聚类识别漂浮物和岸边目标，再通过 Kalman 滤波与路径匹配融合 AIS。论文报告混合检测将召回率从 63.8% 提升到 82.4%。</p>
+<div class="links"><a href="detail.html?id=lidarais">论文详情页与复现路线 →</a><a href="https://doi.org/10.1016/j.conengprac.2026.107100" target="_blank" rel="noopener">期刊原文 →</a><a href="https://doi.org/10.5281/zenodo.20345163" target="_blank" rel="noopener">公开测试集 Zenodo →</a></div></article>
+
+<article class="paper" id="p-attentionoffsetnet" data-cats="fusion crossdomain" data-search="Attention OffsetNet Translation Free Transfer Learning Optical SAR Registration Full Scene Subpixel Refinement Jin Woo Yu Hyung Sup Jung KOMPSAT-3A TerraSAR-X CBAM RANSAC">
+<span class="tag">光学 + 卫星 SAR</span><span class="tag">跨模态图像配准</span><span class="status">IEEE JSTARS · 2026 · 跨领域方法</span>
+<h2>⑦ Attention OffsetNet: Translation-Free Transfer Learning for Optical–SAR Registration With Full-Scene Subpixel Refinement</h2>
+<div class="meta">作者：Jin-Woo Yu, Hyung-Sup Jung<br>IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 19, 31663–31679 · DOI：10.1109/JSTARS.2026.3731425</div>
+<p>通过光学-光学预训练、光学-SAR 微调、CBAM 特征重加权和 RANSAC 全景精化完成跨模态配准。该论文研究的是卫星 SAR，不是船载航海雷达或 77 GHz 毫米波雷达，作为跨领域方法单独归类。</p>
+<div class="links"><a href="detail.html?id=attentionoffsetnet">论文详情页与复现路线 →</a><a href="https://doi.org/10.1109/JSTARS.2026.3731425" target="_blank" rel="noopener">期刊原文 →</a><a href="../datasets/index.html#kompsat-sar">卫星数据集记录 →</a></div></article>
+
 <section class="panel">
 <h2 style="margin-top:0">当前文献库的使用说明</h2>
 <ul style="line-height:1.9;color:#475569">
 <li>检索支持题名、作者、模型、数据集和关键词。</li>
-<li>分类标签可组合筛选：多模态融合、检测、跟踪、AIS 关联、红外视觉、雷达感知、预印本。</li>
+<li>分类标签可组合筛选：多模态融合、检测、跟踪、AIS 关联、红外视觉、雷达感知、LiDAR 和跨领域配准。</li>
 <li>“正式期刊论文”仅表示已在期刊官网确认发表信息，不代表中科院分区已核实。</li>
 <li>每周新周报发布后，应同步把经过来源核验的论文条目追加到本页，旧条目不删除。</li>
 </ul>
