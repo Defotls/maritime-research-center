@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="船舶多模态感知研究论文库，支持按方向筛选和关键词检索。">
+<title>论文分类库｜船舶多模态科研中心</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--text:#172033;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--navy:#10213c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:"Microsoft YaHei",Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:30px max(5%,calc((100% - 1150px)/2))}header h1{margin:0 0 8px;font-size:26px}header p{margin:0;color:#cbd5e1;line-height:1.8}
+nav{background:#fff;border-bottom:1px solid var(--line);padding:14px max(5%,calc((100% - 1150px)/2));display:flex;gap:18px;flex-wrap:wrap}nav a{color:#334155;text-decoration:none;font-size:14px}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+main{max-width:1150px;margin:28px auto;padding:0 18px}.panel,.paper{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}.stat strong{display:block;font-size:22px;color:var(--blue)}.stat span{font-size:12px;color:var(--muted)}
+.search{width:100%;padding:13px;border:1px solid var(--line);border-radius:9px;font-size:14px;margin:12px 0}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px}.filters button{border:1px solid var(--line);background:#fff;padding:9px 13px;border-radius:20px;cursor:pointer;color:#334155}.filters button.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.paper{scroll-margin-top:16px}.paper h2{font-size:19px;line-height:1.5;margin:8px 0}.meta{font-size:13px;color:var(--muted);line-height:1.9}.tag{display:inline-block;padding:4px 9px;border-radius:20px;background:#eaf1ff;color:#2457b5;font-size:12px;margin:2px}.status{display:inline-block;padding:4px 9px;border-radius:20px;background:#f1f5f9;color:#475569;font-size:12px;margin:2px}
+.paper h3{font-size:15px;margin:17px 0 7px}.paper p,.paper li{font-size:14px;line-height:1.85;color:#475569}.paper ul{padding-left:20px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}.metric{background:#f8fafc;border:1px solid var(--line);border-radius:9px;padding:10px}.metric strong{display:block;font-size:18px;color:#1d4ed8}.metric span{font-size:11px;color:var(--muted)}
+.flow{display:flex;align-items:stretch;gap:7px;flex-wrap:wrap;margin:12px 0}.step{flex:1 1 125px;min-width:115px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:9px;padding:11px;text-align:center;font-size:12px;line-height:1.7}.arrow{align-self:center;color:#64748b;font-weight:bold}
+.note{background:#fff7e6;border-left:4px solid #d99a00;padding:11px 13px;font-size:13px;line-height:1.8;color:#704d00;margin:12px 0}.links{display:flex;gap:15px;flex-wrap:wrap;margin-top:12px;font-size:14px;font-weight:700}
+.empty{display:none;background:#fff;border:1px dashed #cbd5e1;border-radius:12px;padding:28px;text-align:center;color:var(--muted)}
+footer{text-align:center;padding:30px;color:var(--muted);font-size:13px}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}header h1{font-size:22px}.paper{padding:16px}.arrow{display:none}}
+</style>
+</head>
+<body>
+<header><h1>🔬 船舶多模态研究论文库</h1><p>按传感器模态、研究任务和论文状态分类。支持关键词搜索，持续积累可复现的研究线索。</p></header>
+<nav><a href="../index.html">科研中心首页</a><a href="../reports/index.html">历史周报</a><a href="#library">论文库</a></nav>
+<main id="library">
+<section class="panel">
+<h2 style="margin-top:0">论文检索与分类</h2>
+<p style="line-height:1.8;color:#475569">当前收录的是 2026-11-05 周报中完成基本来源核验的 3 篇候选论文。论文状态、指标口径和数据开放情况分别标注；期刊分区没有可靠核验的，不做推断。</p>
+<div class="stats">
+<div class="stat"><strong id="count">3</strong><span>论文条目</span></div>
+<div class="stat"><strong>6</strong><span>研究方向标签</span></div>
+<div class="stat"><strong>2</strong><span>正式期刊论文</span></div>
+<div class="stat"><strong>1</strong><span>arXiv 预印本</span></div>
+</div>
+<input class="search" id="search" type="search" placeholder="搜索标题、作者、模型、数据集或关键词……" aria-label="搜索论文">
+<div class="filters" id="filters">
+<button class="active" data-filter="all">全部</button>
+<button data-filter="fusion">多模态融合</button>
+<button data-filter="detection">目标检测</button>
+<button data-filter="tracking">多目标跟踪</button>
+<button data-filter="ais">AIS 关联</button>
+<button data-filter="infrared">红外视觉</button>
+<button data-filter="radar">雷达感知</button>
+<button data-filter="preprint">预印本</button>
+</div>
+</section>
+
+<article class="paper" id="p-amgt" data-cats="fusion detection tracking ais infrared preprint" data-search="AMGT Multi-Modal Graph Neural Network-Inspired Vessel Identification and Tracking for UAV-Based Maritime Surveillance Chenjie Zhao Jiangtian Nie Jiawen Kang Yuxu Lu Ryan Wen Liu MAP-M2UAV50 MAir-YOLOv8-OBB MAir-SORT graph neural network AIS RGB visible infrared IR UAV">
+<span class="tag">RGB + IR + AIS + UAV</span><span class="tag">检测 / 跟踪 / 关联</span><span class="status">arXiv 预印本</span>
+<h2>① Multi-Modal Graph Neural Network-Inspired Vessel Identification and Tracking for UAV-Based Maritime Surveillance</h2>
+<div class="meta">作者：Chenjie Zhao, Jiangtian Nie, Jiawen Kang, Yuxu Lu, Ryan Wen Liu<br>首次提交：2026-10-09 · arXiv:2610.13220v1 · 当前记录状态：预印本，非正式期刊论文</div>
+<h3>研究问题与方法</h3>
+<p>面向无人机海上监控，将可见光/红外图像、AIS 与 UAV 飞行数据结合，处理恶劣成像、平台运动导致的坐标变化，以及视频目标与 AIS 身份之间的异步关联。整体框架 AMGT 包含多模态预处理、MAir-YOLOv8-OBB 检测、MAir-SORT 跟踪、时空图学习关联和运动感知坐标统一（MCU）。</p>
+<div class="flow"><div class="step">RGB / IR 视频<br>＋ AIS / GNSS / IMU</div><div class="arrow">→</div><div class="step">帧率同步<br>透视变换对齐</div><div class="arrow">→</div><div class="step">MAir-YOLOv8-OBB<br>旋转框检测</div><div class="arrow">→</div><div class="step">MAir-SORT<br>多线索跟踪</div><div class="arrow">→</div><div class="step">MCU + 时空图网络<br>匈牙利匹配</div><div class="arrow">→</div><div class="step">连续轨迹<br>＋ AIS / MMSI 身份</div></div>
+<h3>数据与论文报告结果</h3>
+<p>MAP-M2UAV50 包含约 12K 张图像、50 段视频、约 70K 条标注，涉及可见光、红外、AIS 和飞行数据。检测实验中 MAir-YOLOv8s-OBB 的 mAP50 为 97.81%、mAP50-95 为 82.00%；在 8 段代表性航拍视频上的 MAir-SORT 报告 MOTA 83.78%、IDF1 91.76%、HOTA 72.77%，IDS 为 2。</p>
+<div class="metrics"><div class="metric"><strong>97.81%</strong><span>mAP50（检测）</span></div><div class="metric"><strong>82.00%</strong><span>mAP50-95（检测）</span></div><div class="metric"><strong>83.78%</strong><span>MOTA（8 段视频）</span></div><div class="metric"><strong>91.76%</strong><span>IDF1（8 段视频）</span></div></div>
+<div class="note">复现提醒：这是 UAV 视角的四模态系统，不等同于岸基/船载固定摄像机方案；论文写明数据集与代码将公开，本次尚未确认公开仓库已可下载。不能将该预印本作为正式二区期刊论文引用。</div>
+<div class="links"><a href="https://arxiv.org/html/2610.13220" target="_blank" rel="noopener">arXiv 原文 HTML →</a><a href="https://arxiv.org/abs/2610.13220" target="_blank" rel="noopener">arXiv 摘要页 →</a><a href="../reports/2026-11-05.html#p1">本期周报分析 →</a></div>
+</article>
+
+<article class="paper" id="p-feature-ais" data-cats="fusion detection tracking ais radar" data-search="Vessel Detection and Tracking Based on Feature-Level Fusion and AIS Enhancement Yue Lin Zuo Meng Yuan Kangyi Feng Hui Huang Wenbin Song Pei VFFRadar-Net Deformable Cross-Attention Scale-Adaptive Loss AF-SORT radar visible AIS">
+<span class="tag">航海雷达 + 可见光 + AIS</span><span class="tag">检测 / 跟踪 / 轨迹关联</span><span class="status">期刊在线发表</span>
+<h2>② Vessel Detection and Tracking Based on Feature-Level Fusion and AIS Enhancement</h2>
+<div class="meta">作者：Yue Lin, Zuo Meng, Yuan Kangyi, Feng Hui, Huang Wenbin, Song Pei<br>期刊：中国舰船研究（Chinese Journal of Ship Research）· 官方网站在线发表：2026-04-27<br>DOI：10.19693/j.issn.1673-3185.04841</div>
+<h3>研究问题与方法</h3>
+<p>针对复杂水面环境下单一传感器检测不稳定、雷达小目标易漏检和跟踪漂移，融合航海雷达、可见光相机与 AIS。VFFRadar-Net 使用可见光特征增强雷达目标检测；Deformable Cross-Attention 用于跨模态特征交互与对齐；Scale-Adaptive Loss 缓解小目标定位偏差；AIS 增强 SORT 跟踪，并以多特征轨迹相似度关联 AIS 与雷达轨迹。</p>
+<div class="flow"><div class="step">航海雷达<br>＋可见光图像<br>＋ AIS 消息</div><div class="arrow">→</div><div class="step">雷达/图像特征提取<br>跨模态对齐</div><div class="arrow">→</div><div class="step">VFFRadar-Net<br>特征级融合检测</div><div class="arrow">→</div><div class="step">AIS 增强 SORT<br>在线多目标跟踪</div><div class="arrow">→</div><div class="step">多特征轨迹相似度<br>AIS-雷达关联</div></div>
+<h3>摘要报告结果</h3>
+<div class="metrics"><div class="metric"><strong>91.9%</strong><span>平均检测精度</span></div><div class="metric"><strong>85.2%</strong><span>MOTA</span></div><div class="metric"><strong>76.2%</strong><span>IDF1</span></div><div class="metric"><strong>3 模态</strong><span>雷达 / 视觉 / AIS</span></div></div>
+<div class="note">核验提醒：已核对期刊官网的题名、作者、在线日期与摘要指标；本次未核实该刊当前适用的中科院分区，也未确认代码或数据是否公开。出版社英文摘要中跟踪模块缩写出现 AF-SORT / AE-SORT 不一致，正式引用前建议以论文 PDF 正文统一核对。</div>
+<div class="links"><a href="https://doi.org/10.19693/j.issn.1673-3185.04841" target="_blank" rel="noopener">DOI 原文入口 →</a><a href="https://www.ship-research.com/en/article/doi/10.19693/j.issn.1673-3185.04841" target="_blank" rel="noopener">期刊官网页面 →</a><a href="../reports/2026-11-05.html#p2">本期周报分析 →</a></div>
+</article>
+
+<article class="paper" id="p-vision-radar" data-cats="fusion detection radar" data-search="Dynamic Object Detection in Maritime Navigation Scenarios Based on Vision Radar Fusion Qianqian Chen Changshi Xiao Bowei Li Sensors MVRD Faster R-CNN millimeter wave radar camera">
+<span class="tag">毫米波雷达 + 视觉</span><span class="tag">动态目标检测</span><span class="status">正式期刊论文 · Open Access</span>
+<h2>③ Dynamic Object Detection in Maritime Navigation Scenarios Based on Vision–Radar Fusion</h2>
+<div class="meta">作者：Qianqian Chen, Changshi Xiao, Bowei Li<br>期刊：Sensors · 2026-06-02 · 26(11), 3508<br>DOI：10.3390/s26113508</div>
+<h3>研究问题与方法</h3>
+<p>面向海上航行中的遮挡、尺度变化、多目标干扰和恶劣能见度，建立雷达-摄像机协同标定与跨模态特征映射；雷达点迹被投影并扩展为距离/速度特征图，与视觉特征融合；随后使用改进 Faster R-CNN、优化 RPN 和多尺度训练进行动态目标检测。</p>
+<div class="flow"><div class="step">毫米波雷达<br>＋摄像机图像</div><div class="arrow">→</div><div class="step">协同标定<br>单应性映射</div><div class="arrow">→</div><div class="step">雷达距离/速度<br>特征图扩展</div><div class="arrow">→</div><div class="step">视觉-雷达特征融合<br>增广拉格朗日优化</div><div class="arrow">→</div><div class="step">改进 Faster R-CNN<br>多尺度检测</div></div>
+<h3>数据与论文报告结果</h3>
+<p>作者构建自有 MVRD 数据集，包含 3,848 张图像、3,848 帧雷达数据和 28,332 个目标标注。表 3 报告的 Precision：晴天 88.93%、强眩光 76.86%、雾天 74.47%、密集目标场景 83.01%。该论文研究的是海上动态目标感知，不应直接把所有结果解释为标准公开船舶检测基准成绩。</p>
+<div class="metrics"><div class="metric"><strong>88.93%</strong><span>晴天 Precision</span></div><div class="metric"><strong>76.86%</strong><span>强眩光 Precision</span></div><div class="metric"><strong>74.47%</strong><span>雾天 Precision</span></div><div class="metric"><strong>83.01%</strong><span>密集目标 Precision</span></div></div>
+<div class="note">复现提醒：MVRD 为作者自建数据集；论文数据可向通讯作者合理请求，本次未确认可直接公开下载。论文使用毫米波雷达，但不应在没有设备规格证据时擅自标注为 77 GHz。</div>
+<div class="links"><a href="https://doi.org/10.3390/s26113508" target="_blank" rel="noopener">DOI 原文入口 →</a><a href="https://www.mdpi.com/1424-8220/26/11/3508" target="_blank" rel="noopener">Sensors 出版社页面 →</a><a href="../reports/2026-11-05.html#p3">本期周报分析 →</a></div>
+</article>
+
+<section class="panel">
+<h2 style="margin-top:0">当前文献库的使用说明</h2>
+<ul style="line-height:1.9;color:#475569">
+<li>检索支持题名、作者、模型、数据集和关键词。</li>
+<li>分类标签可组合筛选：多模态融合、检测、跟踪、AIS 关联、红外视觉、雷达感知、预印本。</li>
+<li>“正式期刊论文”仅表示已在期刊官网确认发表信息，不代表中科院分区已核实。</li>
+<li>每周新周报发布后，应同步把经过来源核验的论文条目追加到本页，旧条目不删除。</li>
+</ul>
+</section>
+<div id="empty" class="empty">没有找到符合条件的论文，请尝试其他关键词或分类。</div>
+</main>
+<footer>船舶多模态科研中心 · 论文分类与检索库</footer>
+<script>
+const search=document.getElementById('search'),buttons=[...document.querySelectorAll('#filters button')],cards=[...document.querySelectorAll('.paper')],empty=document.getElementById('empty'),count=document.getElementById('count');
+let current='all';
+function update(){const q=search.value.trim().toLowerCase();let n=0;cards.forEach(c=>{const cats=c.dataset.cats.split(' '),text=c.dataset.search.toLowerCase()+' '+c.innerText.toLowerCase();const ok=(current==='all'||cats.includes(current))&&text.includes(q);c.style.display=ok?'block':'none';if(ok)n++});empty.style.display=n?'none':'block';count.textContent=n}
+buttons.forEach(b=>b.addEventListener('click',()=>{current=b.dataset.filter;buttons.forEach(x=>x.classList.toggle('active',x===b));update()}));
+search.addEventListener('input',update);
+</script>
+</body></html>
