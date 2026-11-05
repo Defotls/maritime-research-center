@@ -27,15 +27,15 @@ footer{text-align:center;padding:30px;color:var(--muted);font-size:13px}
 </head>
 <body>
 <header><h1>🔬 船舶多模态研究论文库</h1><p>按传感器模态、研究任务和论文状态分类。支持关键词搜索，持续积累可复现的研究线索。</p></header>
-<nav><a href="../index.html">科研中心首页</a><a href="../reports/index.html">历史周报</a><a href="#library">论文库</a></nav>
+<nav><a href="../index.html">科研中心首页</a><a href="../reports/index.html">历史周报</a><a href="../datasets/index.html">数据集数据库</a><a href="../progress/index.html">复现进度</a><a href="#library">论文库</a></nav>
 <main id="library">
 <section class="panel">
 <h2 style="margin-top:0">论文检索与分类</h2>
-<p style="line-height:1.8;color:#475569">当前收录的是 2026-11-05 周报中完成基本来源核验的 3 篇候选论文。论文状态、指标口径和数据开放情况分别标注；期刊分区没有可靠核验的，不做推断。</p>
+<p style="line-height:1.8;color:#475569">当前收录 7 篇论文：既有原分类库的 3 篇，也新增 4 篇已上传 PDF 对应研究；每篇新增论文均有独立详情页。论文状态、指标口径和数据开放情况分别标注；期刊分区没有可靠核验的，不做推断。</p>
 <div class="stats">
-<div class="stat"><strong id="count">3</strong><span>论文条目</span></div>
+<div class="stat"><strong id="count">7</strong><span>论文条目</span></div>
 <div class="stat"><strong>6</strong><span>研究方向标签</span></div>
-<div class="stat"><strong>2</strong><span>正式期刊论文</span></div>
+<div class="stat"><strong>6</strong><span>正式期刊论文</span></div>
 <div class="stat"><strong>1</strong><span>arXiv 预印本</span></div>
 </div>
 <input class="search" id="search" type="search" placeholder="搜索标题、作者、模型、数据集或关键词……" aria-label="搜索论文">
@@ -46,7 +46,7 @@ footer{text-align:center;padding:30px;color:var(--muted);font-size:13px}
 <button data-filter="tracking">多目标跟踪</button>
 <button data-filter="ais">AIS 关联</button>
 <button data-filter="infrared">红外视觉</button>
-<button data-filter="radar">雷达感知</button>
+<button data-filter="radar">雷达感知</button>\n<button data-filter="lidar">LiDAR</button><button data-filter="crossdomain">跨领域配准</button>
 <button data-filter="preprint">预印本</button>
 </div>
 </section>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="船舶多模态论文复现进度管理，支持本地保存、任务勾选、备注和 JSON 备份。"><title>复现进度管理｜船舶多模态科研中心</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--text:#172033;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--navy:#10213c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:"Microsoft YaHei",Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:28px max(5%,calc((100% - 1100px)/2))}header h1{margin:0 0 8px;font-size:24px}header p{margin:0;color:#cbd5e1;line-height:1.8}
+nav{background:#fff;padding:14px max(5%,calc((100% - 1100px)/2));display:flex;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line)}nav a,a{color:var(--blue);text-decoration:none}
+main{max-width:1100px;margin:26px auto;padding:0 18px}.panel,.record{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:13px}.stat strong{display:block;font-size:22px;color:var(--blue)}.stat span{font-size:12px;color:var(--muted)}
+.tools{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}.tools input,.tools select{padding:11px;border:1px solid var(--line);border-radius:9px;background:#fff}.tools input{flex:1;min-width:220px}
+button{border:1px solid var(--line);border-radius:9px;background:#fff;padding:10px 13px;color:#334155;cursor:pointer;font-weight:600}button.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.record{scroll-margin-top:16px}.record h2{font-size:17px;margin:5px 0}.meta{font-size:12px;color:var(--muted);line-height:1.8}.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:12px 0}.row label{font-size:13px;color:#475569}.row select{padding:8px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.progress{height:9px;background:#e8eef7;border-radius:20px;overflow:hidden;flex:1;min-width:120px}.progress span{display:block;height:100%;background:#2563eb;width:0}
+.checks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.check{display:flex;gap:8px;align-items:flex-start;background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:9px;font-size:13px;color:#475569}.check input{margin-top:2px}
+textarea{width:100%;min-height:68px;padding:10px;border:1px solid var(--line);border-radius:9px;font:13px inherit;resize:vertical}.hint{font-size:12px;color:var(--muted);line-height:1.8}.hidden{display:none}
+footer{text-align:center;padding:28px;color:var(--muted);font-size:13px}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.checks{grid-template-columns:1fr 1fr}.record{padding:15px}header h1{font-size:21px}}
+@media(max-width:480px){.checks{grid-template-columns:1fr}}
+</style></head><body>
+<header><h1>🧪 论文复现进度管理</h1><p>把阅读、数据准备、环境搭建、代码运行、指标核验和消融实验拆成可持续打卡的任务。</p></header>
+<nav><a href="../index.html">科研中心首页</a><a href="../papers/index.html">论文分类库</a><a href="../datasets/index.html">数据集数据库</a><a href="#tracker">复现看板</a></nav>
+<main id="tracker">
+<section class="panel"><h2 style="margin-top:0">复现总览</h2><div class="stats">
+<div class="stat"><strong id="total">7</strong><span>跟踪论文</span></div><div class="stat"><strong id="started">0</strong><span>已开始</span></div><div class="stat"><strong id="completed">0</strong><span>已完成</span></div><div class="stat"><strong id="average">0%</strong><span>平均任务完成度</span></div></div>
+<div class="tools"><input id="search" type="search" placeholder="搜索论文或复现任务……"><select id="statusFilter"><option value="all">全部状态</option><option>未开始</option><option>文献研读</option><option>数据准备</option><option>环境配置</option><option>代码运行</option><option>指标核验</option><option>已完成</option><option>受阻</option></select>
+<button class="primary" id="export">导出 JSON 备份</button><label><button id="importBtn">导入备份</button><input id="importFile" type="file" accept="application/json" style="display:none"></label><button id="reset">重置本机进度</button></div>
+<p class="hint">保存方式：进度自动保存在当前浏览器的本地存储中，不需要登录。换电脑或清理浏览器前，请先导出 JSON 备份；在另一台设备打开网站后可导入恢复。本页面不把个人进度自动上传到 GitHub。</p></section>
+<div id="records"></div><div id="empty" class="panel hidden">没有找到符合条件的复现记录。</div>
+</main><footer>船舶多模态科研中心 · 本地复现进度看板</footer>
+<script>
+const PAPERS=[{"id":"deepsorvf","title":"DeepSORVF｜AIS + 视频异步轨迹匹配","venue":"IEEE T-ITS 2023","next":"先跑通公开代码和 FVessel V1.0，复现 MOFA / IDP / IDR / IDF1。"},{"id":"naveye","title":"NavEYE｜AIS + 雷达 + RGB 态势感知","venue":"Ocean Engineering 2026","next":"先拆解 MCGA / DAWF / TDSF / VARF，再用可获得数据实现模块级复现。"},{"id":"lidarais","title":"LiDAR + AIS｜BEV 船舶检测与轨迹匹配","venue":"Control Engineering Practice 2026","next":"先下载 Zenodo 600 帧测试子集，复现 BEV + YOLO11 OBB 和 AIS 噪声实验。"},{"id":"attentionoffsetnet","title":"Attention OffsetNet｜光学-SAR 配准（跨领域）","venue":"IEEE JSTARS 2026","next":"先搭建光学-光学偏移预训练，再做光学-SAR 微调；不要把卫星 SAR 当作船载雷达。"},{"id":"amgt","title":"AMGT｜UAV RGB + 红外 + AIS 船舶识别","venue":"arXiv 预印本","next":"先核验论文版本、数据与代码下载情况，再复现检测、跟踪和时空图关联。"},{"id":"feature-ais","title":"Feature-level Fusion｜雷达 + RGB + AIS","venue":"中国舰船研究 2026","next":"核对原文数据、模块缩写和基线，再拆分特征融合检测与 AIS 增强跟踪。"},{"id":"vision-radar","title":"Vision–Radar Fusion｜海上动态目标检测","venue":"Sensors 2026","next":"核验 MVRD 数据可用性，先复现传感器标定与雷达-视觉特征映射。"}];
+const TASKS=["读懂论文问题与方法","核验数据集与代码入口","配置运行环境","跑通代码 / 建立基线","复现关键指标","完成消融或扩展实验"];
+const KEY="maritimeResearchProgressV1";
+const defaults=()=>Object.fromEntries(PAPERS.map(p=>[p.id,{status:"未开始",checks:TASKS.map(()=>false),notes:"",updated:""}]));
+let state=load();
+function load(){try{return Object.assign(defaults(),JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){return defaults()}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){alert("浏览器本地存储不可用，请导出备份保存进度。")}}
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function render(){const root=document.getElementById("records"),q=document.getElementById("search").value.trim().toLowerCase(),sf=document.getElementById("statusFilter").value;let shown=0;
+root.innerHTML=PAPERS.map(p=>{const s=state[p.id]||{status:"未开始",checks:TASKS.map(()=>false),notes:"",updated:""};const pct=Math.round(s.checks.filter(Boolean).length/TASKS.length*100);const text=(p.title+" "+p.venue+" "+p.next).toLowerCase();const visible=text.includes(q)&&(sf==="all"||s.status===sf);if(!visible)return "";shown++;
+return '<article class="record" id="'+esc(p.id)+'" data-id="'+esc(p.id)+'"><div class="meta">'+esc(p.venue)+'</div><h2>'+esc(p.title)+'</h2><p class="meta">建议下一步：'+esc(p.next)+'</p><div class="row"><label>当前阶段 <select class="status"><option'+(s.status==="未开始"?" selected":"")+'>未开始</option>'+["文献研读","数据准备","环境配置","代码运行","指标核验","已完成","受阻"].map(x=>'<option'+(s.status===x?" selected":"")+'>'+x+'</option>').join("")+'</select></label><strong class="pct">'+pct+'%</strong><div class="progress"><span style="width:'+pct+'%"></span></div><span class="meta updated">最近更新：'+esc(s.updated||"尚未记录")+'</span></div><div class="checks">'+TASKS.map((t,i)=>'<label class="check"><input type="checkbox" data-task="'+i+'"'+(s.checks[i]?" checked":"")+'><span>'+esc(t)+'</span></label>').join("")+'</div><label class="meta">实验记录 / 问题 / 下一步计划</label><textarea class="notes" placeholder="例如：已完成环境安装；CUDA 版本不匹配；下一步先跑 clip-01……">'+esc(s.notes)+'</textarea><div class="row"><a href="../papers/detail.html?id='+esc(p.id)+'">打开论文详情 →</a><span class="meta">进度仅保存在当前浏览器</span></div></article>'
+}).join("");
+document.getElementById("empty").classList.toggle("hidden",shown>0);
+updateStats();
+root.querySelectorAll(".record").forEach(card=>{
+const id=card.dataset.id;
+const save=()=>{const checks=[...card.querySelectorAll('input[type="checkbox"]')].map(x=>x.checked);state[id]={status:card.querySelector(".status").value,checks,notes:card.querySelector(".notes").value,updated:new Date().toLocaleString("zh-CN")};persist();const pct=Math.round(checks.filter(Boolean).length/TASKS.length*100);card.querySelector(".pct").textContent=pct+"%";card.querySelector(".progress span").style.width=pct+"%";card.querySelector(".updated").textContent="最近更新："+state[id].updated;updateStats()};
+card.querySelector(".status").addEventListener("change",save);card.querySelectorAll('input[type="checkbox"]').forEach(x=>x.addEventListener("change",save));card.querySelector(".notes").addEventListener("input",save);
+});
+}
+function updateStats(){const vals=PAPERS.map(p=>state[p.id]||defaults()[p.id]);document.getElementById("total").textContent=PAPERS.length;document.getElementById("started").textContent=vals.filter(x=>x.status!=="未开始").length;document.getElementById("completed").textContent=vals.filter(x=>x.status==="已完成").length;document.getElementById("average").textContent=Math.round(vals.reduce((a,x)=>a+x.checks.filter(Boolean).length/TASKS.length,0)/PAPERS.length*100)+"%"}
+document.getElementById("search").addEventListener("input",render);document.getElementById("statusFilter").addEventListener("change",render);
+document.getElementById("export").addEventListener("click",()=>{const data={schema:"maritime-repro-v1",exportedAt:new Date().toISOString(),records:state};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="maritime-reproduction-progress.json";a.click();URL.revokeObjectURL(url)});
+document.getElementById("importBtn").addEventListener("click",()=>document.getElementById("importFile").click());
+document.getElementById("importFile").addEventListener("change",e=>{const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const obj=JSON.parse(reader.result);const data=obj.records||obj;if(!data||typeof data!=="object")throw new Error("bad");state=Object.assign(defaults(),data);persist();render();alert("进度备份已导入。")}catch(err){alert("文件格式不正确，无法导入。")}};reader.readAsText(file);e.target.value=""});
+document.getElementById("reset").addEventListener("click",()=>{if(confirm("确定清空当前浏览器保存的全部复现进度吗？建议先导出备份。")){state=defaults();persist();render()}});
+render();
+</script></body></html>
