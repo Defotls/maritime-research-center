@@ -19,6 +19,7 @@ const id=new URLSearchParams(location.search).get("id"),p=P[id];
 if(!p){document.getElementById("title").textContent="论文不存在";document.getElementById("noPdf").classList.remove("hidden")}
 else{document.title=p.title+"｜PDF 阅读器";document.getElementById("title").textContent=p.title;document.getElementById("meta").textContent="DOI："+p.doi;document.getElementById("notice").textContent=p.note;document.getElementById("publisher").href=p.publisher;document.getElementById("detail").href="detail.html?id="+encodeURIComponent(id);if(p.pdf){document.getElementById("frame").src=p.pdf;document.getElementById("frameWrap").classList.remove("hidden");document.getElementById("open").href=p.pdf;document.getElementById("open").classList.remove("hidden")}else document.getElementById("noPdf").classList.remove("hidden")}
 </script>
+<script>
 (function(){
  const status=document.getElementById("privateStatus"),button=document.getElementById("privateUpload"),fileInput=document.getElementById("privateFile");
  let client=null,user=null;
@@ -65,4 +66,5 @@ else{document.title=p.title+"｜PDF 阅读器";document.getElementById("title").
   status.textContent="上传完成。该 PDF 仅此登录账号可访问。";
  });
 })();
+</script>
 </body></html>
