@@ -8,7 +8,7 @@
   const pageBtn = qs("#translatePage"), selectionBtn = qs("#translateSelection");
   let pdf = null, pageNo = 1, totalPages = 0, client = null, user = null, busy = false;
   let currentSource = "", currentUrl = "";
-  const title = (window.P && window.P[paperId] && window.P[paperId].title) || paperId;
+  const title = document.title.replace("｜PDF 阅读器","") || paperId;
   const setStatus = (s) => { status.textContent = s; };
   const setBusy = (v) => { busy = v; [pageBtn, selectionBtn, prev, next].forEach(b => b.disabled = v); };
   const sha256 = async (s) => {
@@ -127,8 +127,8 @@
   selectionBtn.addEventListener("click",translateSelection);
   initClient().then(()=>{
     const iframe = qs("#frame");
-    const initial = window.P?.[paperId]?.pdf;
-    if (initial) loadPdf(initial);
+    const initial = iframe?.src;
+    if (initial && initial !== "about:blank") loadPdf(initial);
     if (iframe) {
       const observer = new MutationObserver(()=>{ if(iframe.src && iframe.src !== "about:blank") loadPdf(iframe.src); });
       observer.observe(iframe,{attributes:true,attributeFilter:["src"]});
