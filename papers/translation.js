@@ -46,46 +46,10 @@
     }
   }
 
-  async function sha256(value) {
-    const bytes = new TextEncoder().encode(value);
-    const digest = await crypto.subtle.digest("SHA-256", bytes);
-    return Array.from(new Uint8Array(digest)).map((v) => v.toString(16).padStart(2, "0")).join("");
-  }
-
-  async function cached(key) {
-    if (!client || !user) return null;
-    const result = await client.from("paper_translation_cache")
-      .select("translation")
-      .eq("paper_id", paperId)
-      .eq("user_id", user.id)
-      .eq("cache_key", key)
-      .maybeSingle();
-    return result.data ? result.data.translation : null;
-  }
-
-  async function saveCache(key, source, translation) {
-    if (!client || !user) return;
-    const result = await client.from("paper_translation_cache").upsert({
-      user_id: user.id,
-      paper_id: paperId,
-      cache_key: key,
-      page_number: pageNo,
-      source_text: source,
-      translation: translation,
-      model: "deepseek-flash",
-      updated_at: new Date().toISOString()
-    }, { onConflict: "user_id,paper_id,cache_key" });
-    if (result.error) console.warn("Translation cache write failed:", result.error.message);
-  }
-
   async function translate(source) {
     if (!client || !user) {
       throw new Error("请先到“复现进度管理”页面登录科研中心账号。");
     }
-    const key = await sha256("selection\n" + source);
-    const hit = await cached(key);
-    if (hit) return { translation: hit, cached: true };
-
     const result = await client.functions.invoke("translate", {
       body: { text: source, mode: "selection", paperTitle: title }
     });
@@ -93,8 +57,7 @@
     if (result.data && result.data.error) throw new Error(result.data.error);
     if (!result.data || !result.data.translation) throw new Error("翻译服务没有返回有效译文。");
 
-    await saveCache(key, source, result.data.translation);
-    return { translation: result.data.translation, cached: false };
+    return { translation: result.data.translation };
   }
 
   function positionPopup() {
@@ -148,7 +111,7 @@
       const result = await translate(source);
       if (thisRequest !== requestSequence) return;
       selectionResult.textContent = result.translation;
-      setStatus(result.cached ? "已从个人缓存读取这段译文。" : "选中内容翻译完成，译文已保存到个人缓存。");
+      setStatus("选中内容翻译完成。本次译文不会保存。");
       requestAnimationFrame(positionPopup);
     } catch (error) {
       if (thisRequest !== requestSequence) return;
