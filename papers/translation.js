@@ -13,6 +13,7 @@
   const zoomIn = qs("#zoomIn");
   const zoomOut = qs("#zoomOut");
   const zoomLabel = qs("#zoomLabel");
+  const expandReader = qs("#expandReader");
   const popup = qs("#selectionTranslation");
   const selectionSource = qs("#selectionSource");
   const selectionResult = qs("#selectionResult");
@@ -29,6 +30,7 @@
   let selectionTimer = null;
   let lastSelection = "";
   let requestSequence = 0;
+  let savedWindowScrollY = 0;
 
   const title = document.title.replace("｜PDF 阅读器", "") || paperId;
   const setStatus = (message) => { status.textContent = message; };
@@ -140,17 +142,22 @@
     hidePopup();
   }
 
-  async function renderPage(number) {
+  async function renderPage(number, options = {}) {
     if (!pdf || rendering) return;
+    const preserveWindow = options.preserveWindow !== false;
+    const resetViewer = options.resetViewer === true;
+    const keepViewerScroll = options.keepViewerScroll === true;
+    const previousWindowY = window.scrollY;
+    const previousViewerTop = viewer.scrollTop;
+    const previousViewerLeft = viewer.scrollLeft;
+
     rendering = true;
-    pageNo = Math.max(1, Math.min(totalPages, number));
-    pageInput.value = String(pageNo);
+    const targetPage = Math.max(1, Math.min(totalPages, number));
     clearPageSelection();
-    setStatus("正在显示第 " + pageNo + " / " + totalPages + " 页……");
-    pageHost.replaceChildren();
+    setStatus("正在显示第 " + targetPage + " / " + totalPages + " 页……");
 
     try {
-      const page = await pdf.getPage(pageNo);
+      const page = await pdf.getPage(targetPage);
       const baseViewport = page.getViewport({ scale: 1 });
       const availableWidth = Math.max(280, viewer.clientWidth - 36);
       const fitScale = Math.min(1.5, availableWidth / baseViewport.width);
@@ -176,7 +183,6 @@
       textLayer.style.height = viewport.height + "px";
 
       pageElement.append(canvas, textLayer);
-      pageHost.append(pageElement);
 
       const context = canvas.getContext("2d", { alpha: false });
       context.setTransform(outputScale, 0, 0, outputScale, 0, 0);
@@ -195,9 +201,28 @@
       });
       await textTask.promise;
 
+      // Only replace the PDF page after the new page has completely rendered.
+      // This prevents the outer webpage from collapsing and jumping upward.
+      pageHost.replaceChildren(pageElement);
+
+      pageNo = targetPage;
+      pageInput.value = String(pageNo);
       pageInput.max = String(totalPages);
       qs("#translationTotal").textContent = "/ " + totalPages;
       zoomLabel.textContent = Math.round(zoom * 100) + "%";
+
+      if (resetViewer) {
+        viewer.scrollTop = 0;
+        viewer.scrollLeft = Math.max(0, (viewer.scrollWidth - viewer.clientWidth) / 2);
+      } else if (keepViewerScroll) {
+        viewer.scrollTop = previousViewerTop;
+        viewer.scrollLeft = previousViewerLeft;
+      }
+
+      if (preserveWindow && !document.body.classList.contains("pdfReaderExpanded")) {
+        requestAnimationFrame(() => window.scrollTo({ top: previousWindowY, left: 0, behavior: "auto" }));
+      }
+
       setStatus("第 " + pageNo + " / " + totalPages + " 页已加载。直接选中英文内容即可自动翻译。");
     } catch (error) {
       setStatus("页面渲染失败：" + (error.message || "未知错误"));
@@ -229,24 +254,50 @@
     }
   }
 
-  prev.addEventListener("click", () => renderPage(pageNo - 1));
-  next.addEventListener("click", () => renderPage(pageNo + 1));
-  pageInput.addEventListener("change", () => renderPage(Number(pageInput.value) || 1));
+  prev.addEventListener("click", () => renderPage(pageNo - 1, { preserveWindow: true, resetViewer: true }));
+  next.addEventListener("click", () => renderPage(pageNo + 1, { preserveWindow: true, resetViewer: true }));
+  pageInput.addEventListener("change", () => renderPage(Number(pageInput.value) || 1, { preserveWindow: true, resetViewer: true }));
   zoomIn.addEventListener("click", () => {
     zoom = Math.min(2, +(zoom + 0.15).toFixed(2));
-    renderPage(pageNo);
+    renderPage(pageNo, { preserveWindow: true, keepViewerScroll: true });
   });
   zoomOut.addEventListener("click", () => {
     zoom = Math.max(0.65, +(zoom - 0.15).toFixed(2));
-    renderPage(pageNo);
+    renderPage(pageNo, { preserveWindow: true, keepViewerScroll: true });
   });
+  expandReader.addEventListener("click", () => {
+    const expanding = !panel.classList.contains("readerExpanded");
+    if (expanding) {
+      savedWindowScrollY = window.scrollY;
+      panel.classList.add("readerExpanded");
+      document.body.classList.add("pdfReaderExpanded");
+      expandReader.textContent = "✕ 退出放大";
+      expandReader.setAttribute("aria-pressed", "true");
+    } else {
+      panel.classList.remove("readerExpanded");
+      document.body.classList.remove("pdfReaderExpanded");
+      expandReader.textContent = "⛶ 放大阅读";
+      expandReader.setAttribute("aria-pressed", "false");
+      requestAnimationFrame(() => window.scrollTo({ top: savedWindowScrollY, left: 0, behavior: "auto" }));
+    }
+    window.setTimeout(() => {
+      if (pdf && !rendering) renderPage(pageNo, { preserveWindow: false, keepViewerScroll: true });
+    }, 80);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && panel.classList.contains("readerExpanded")) {
+      expandReader.click();
+    }
+  });
+
   closePopup.addEventListener("click", hidePopup);
   document.addEventListener("selectionchange", scheduleSelectionTranslation);
   document.addEventListener("mouseup", scheduleSelectionTranslation);
   document.addEventListener("keyup", scheduleSelectionTranslation);
   document.addEventListener("touchend", () => window.setTimeout(scheduleSelectionTranslation, 150));
   window.addEventListener("resize", () => {
-    if (pdf && !rendering) renderPage(pageNo);
+    if (pdf && !rendering) renderPage(pageNo, { preserveWindow: true, keepViewerScroll: true });
   });
 
   initClient().then(() => {
