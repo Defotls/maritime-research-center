@@ -113,7 +113,7 @@
       setStatus("正在加载 PDF 文本层……");
       const task = window.pdfjsLib.getDocument({url,withCredentials:false});
       pdf = await task.promise; totalPages = pdf.numPages;
-      pageInput.max = totalPages; panel.style.display = "block";
+      pageInput.max = totalPages; qs("#translationTotal").textContent = "/ " + totalPages; panel.style.display = "block";
       await loadPage(1);
     } catch(e) {
       pdf = null; panel.style.display = "block";
